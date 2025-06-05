@@ -44,12 +44,12 @@ function Homepage() {
                         <td><Badge img_path="img/keytouch.png"
                                     title="🔨 KeyTouchArcade"
                                     hardness="🌶️🌶️"
-                                    description="With C-powered programmatically controllable virtual mouse, this arcade is built for BlueStacks emulator. Can integrate with Python."
+                                    description="With C-powered programmatically controllable virtual mouse, this arcade is built for BlueStacks emulator. Can integrate with Python and I made it work on Win11. (Image: Lord of Zombies)"
                                     link="https://cyberspatula.github.io/vmulti-mice-showcase/"/></td>
                         <td><Badge img_path="img/svz.png"
                                     title="📖 AI-powered Samurai vs. Zombies"
                                     hardness="🌶️🌶️🌶️🌶️🌶️"
-                                    description="Build an AI from scratch to play Samurai vs. Zombies Defense. From CG to RL."
+                                    description="Build an AI from scratch to play Samurai vs. Zombies Defense. From Computer Vision to Reinforcement Learning."
                                     link="https://cyberspatula.github.io/svz-main/"/></td>
                     </tr>
                     <tr>
@@ -80,6 +80,12 @@ function Homepage() {
                                     hardness="🌶️🌶️"
                                     description="A step-by-step guide for making your own github.io blogging website. I have also included the full template of Cyber Spatula in this tutorial."
                                     link="https://cyberspatula.github.io/software-cyber-spatula/"/></td>
+                        <td><Badge img_path="img/jsonyx.png"
+                                    title="🔨 jsonyx"
+                                    hardness="🌶️🌶️🌶️"
+                                    description="Structured DBMS that enforces .json into tables. Prototype written in Python, planning production using C++. (Json icon by icnons8.com)"
+                                    link="https://github.com/Kolyn090/jsonyx"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>
