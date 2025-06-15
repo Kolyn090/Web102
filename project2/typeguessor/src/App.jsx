@@ -1,10 +1,10 @@
-import './App.css'
+import './style/App.css'
+import Homepage from './pages/homepage'
 
 function App() {
-  
-  return (
-    <div></div>
-  )
+    return (
+        <Homepage/>
+    )
 }
 
 export default App
