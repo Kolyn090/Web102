@@ -34,5 +34,155 @@
         "difficulty": 5,
         "problem": "type D<T> = T extends (...args: any[]) => infer R\n  ? R extends Promise<infer U>\n    ? U extends Array<infer V>\n      ? V\n      : U\n    : R\n  : T;\ntype Result = D<() => Promise<string[]>>;",
         "answer": "string"
+    },
+    {
+        "ask": "E",
+        "difficulty": 2,
+        "problem": "type E<T> = T extends Array<infer U> ? U : never;\ntype Result = E<boolean[]>;",
+        "answer": "boolean"
+    },
+    {
+        "ask": "F",
+        "difficulty": 2,
+        "problem": "type F<T> = T extends Set<infer U> ? U : T;\ntype Result = F<Set<string>>;",
+        "answer": "string"
+    },
+    {
+        "ask": "G",
+        "difficulty": 3,
+        "problem": "type G<T> = T extends Map<infer K, infer V> ? K : never;\ntype Result = G<Map<number, string>>;",
+        "answer": "number"
+    },
+    {
+        "ask": "H",
+        "difficulty": 3,
+        "problem": "type H<T> = T extends { data: infer U } ? U : never;\ntype Result = H<{ data: { id: number } }>;",
+        "answer": "{ id: number }"
+    },
+    {
+        "ask": "I",
+        "difficulty": 3,
+        "problem": "type I<T> = T extends (a: infer A, b: infer B) => any ? [A, B] : never;\ntype Result = I<(x: string, y: number) => void>;",
+        "answer": "[string, number]"
+    },
+    {
+        "ask": "J",
+        "difficulty": 4,
+        "problem": "type J<T> = T extends { [key: string]: infer U } ? U : never;\ntype Result = J<{ a: number; b: string }>;",
+        "answer": "number | string"
+    },
+    {
+        "ask": "K",
+        "difficulty": 4,
+        "problem": "type K<T> = T extends (...args: any) => infer R ? (R extends Promise<infer U> ? U : R) : never;\ntype Result = K<() => Promise<Date>>;",
+        "answer": "Date"
+    },
+    {
+        "ask": "L",
+        "difficulty": 4,
+        "problem": "type L<T> = T extends `hello-${infer U}` ? U : never;\ntype Result = L<'hello-world'>;",
+        "answer": "world"
+    },
+    {
+        "ask": "M",
+        "difficulty": 4,
+        "problem": "type M<T> = T extends `${infer A}-${infer B}` ? [A, B] : never;\ntype Result = M<'type-script'>;",
+        "answer": "['type', 'script']"
+    },
+    {
+        "ask": "N",
+        "difficulty": 5,
+        "problem": "type N<T> = T extends (infer U)[] ? U extends (infer V)[] ? V : U : never;\ntype Result = N<number[][]>;",
+        "answer": "number"
+    },
+    {
+        "ask": "O",
+        "difficulty": 5,
+        "problem": "type O<T> = T extends { a: infer U; b: infer U } ? U : never;\ntype Result = O<{ a: string; b: string }>;",
+        "answer": "string"
+    },
+    {
+        "ask": "P",
+        "difficulty": 5,
+        "problem": "type P<T> = T extends Promise<infer U> ? U extends Array<infer V> ? V[] : U : never;\ntype Result = P<Promise<string[]>>;",
+        "answer": "string[]"
+    },
+    {
+        "ask": "Q",
+        "difficulty": 5,
+        "problem": "type Q<T> = T extends (...args: infer P) => any ? P[0] : never;\ntype Result = Q<(x: boolean, y: number) => void>;",
+        "answer": "boolean"
+    },
+    {
+        "ask": "R",
+        "difficulty": 5,
+        "problem": "type R<T> = T extends { [K in keyof T]: infer U } ? U : never;\ntype Result = R<{ x: number; y: number }>;",
+        "answer": "number"
+    },
+    {
+        "ask": "S",
+        "difficulty": 5,
+        "problem": "type S<T> = T extends `${number}-${infer U}` ? U : never;\ntype Result = S<'123-abc'>;",
+        "answer": "abc"
+    },
+    {
+        "ask": "T",
+        "difficulty": 5,
+        "problem": "type T<T> = T extends [infer A, ...infer B] ? B : never;\ntype Result = T<[string, number, boolean]>;",
+        "answer": "[number, boolean]"
+    },
+    {
+        "ask": "U",
+        "difficulty": 5,
+        "problem": "type U<T> = T extends { type: infer V; payload: infer P } ? [V, P] : never;\ntype Result = U<{ type: 'LOGIN'; payload: { user: string } }>;",
+        "answer": "['LOGIN', { user: string }]"
+    },
+    {
+        "ask": "V",
+        "difficulty": 5,
+        "problem": "type V<T> = T extends { [K in keyof T]: T[K] extends infer U ? U : never } ? keyof T : never;\ntype Result = V<{ a: 1; b: 2 }>;",
+        "answer": "'a' | 'b'"
+    },
+    {
+        "ask": "W",
+        "difficulty": 5,
+        "problem": "type W<T> = T extends (arg: infer A) => infer R ? [A, R] : never;\ntype Result = W<(x: Date) => boolean>;",
+        "answer": "[Date, boolean]"
+    },
+    {
+        "ask": "X",
+        "difficulty": 5,
+        "problem": "type X<T> = T extends `[${infer U}]` ? U : never;\ntype Result = X<'[42]'>;",
+        "answer": "42"
+    },
+    {
+    "ask": "A",
+    "difficulty": 3,
+    "problem": "type A<T> = {\n  readonly [K in keyof T]: T[K]\n};\ntype Result = A<{ a: number; b: string }>;",
+    "answer": "{ readonly a: number; readonly b: string }"
+    },
+    {
+        "ask": "B",
+        "difficulty": 3,
+        "problem": "type B<T> = {\n  -readonly [K in keyof T]: T[K]\n};\ntype Result = B<{ readonly a: number; readonly b: string }>;",
+        "answer": "{ a: number; b: string }"
+    },
+    {
+        "ask": "C",
+        "difficulty": 2,
+        "problem": "type C<T> = keyof T;\ntype Result = C<{ a: number; b: string }>;",
+        "answer": "\"a\" | \"b\""
+    },
+    {
+        "ask": "D",
+        "difficulty": 4,
+        "problem": "type D<T, V> = {\n  [K in keyof T as T[K] extends V ? K : never]: T[K]\n};\ntype Result = D<{ a: number; b: string; c: number }, number>;",
+        "answer": "{ a: number; c: number }"
+    },
+    {
+        "ask": "E",
+        "difficulty": 4,
+        "problem": "type E<T> = T extends any ? (x: T) => void : never;\ntype Result = E<string>;",
+        "answer": "(x: string) => void"
     }
 ]

@@ -6,18 +6,36 @@ import { useState } from "react";
 function Homepage(props) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [problemIndex, setProblemIndex] = useState(0);
+    const shownProblemIndices = [];
 
-    function SetRandomProblem() {
-        return setProblemIndex(Math.floor(Math.random() * quizdata.length));
+    function GetRandomNotShownIndex(list) {
+        const availableIndices = list
+            .map((_, idx) => idx)
+            .filter(idx => !shownProblemIndices.includes(idx));
+
+        if (availableIndices.length > 0) {
+            return availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        } else {
+            const lastIndex = shownProblemIndices[shownProblemIndices.length-1];
+            shownProblemIndices.splice(0);
+            shownProblemIndices.push(lastIndex);
+            
+            return GetRandomNotShownIndex();
+        }
+    }
+
+    function SetRandomProblem(newIndex) {
+        return setProblemIndex(newIndex);
     }
 
     const handleFlip = () => setIsFlipped(!isFlipped);
 
     const handleNext = () => {
-        SetRandomProblem();
+        const randomIndex = GetRandomNotShownIndex(quizdata);
+        shownProblemIndices.push(randomIndex);
+        SetRandomProblem(randomIndex);
         setIsFlipped(false); // Reset flip state on next card
     };
-    
 
     return (
         <div>
@@ -30,7 +48,7 @@ function Homepage(props) {
                         problem={quizdata[problemIndex]["problem"]}
                         answer={quizdata[problemIndex]["answer"]}
             ></FlashCard>
-            <button onClick={handleNext}>Next</button>
+            <button onClick={handleNext} style={{width: '100px'}}>Next</button>
         </div>
     )
 }
