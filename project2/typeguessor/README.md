@@ -1,10 +1,10 @@
-# Web Development Project 2 - *Name of App Here*
+# Web Development Project 2 - *Typescript Type Guessing Game By Kolyn090*
 
-Submitted by: **Your Name Here**
+Submitted by: **Jianxin Lin**
 
-This web app: **insert description**
+This web app: **Guess the type of the given Typescript snippet.**
 
-Time spent: **X** hours spent in total
+Time spent: **3** hours spent in total
 
 ## Required Features
 
@@ -56,7 +56,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2025] [Jianxin Lin (Kolyn090)]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
