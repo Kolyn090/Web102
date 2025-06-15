@@ -36,7 +36,7 @@ function FlashCard(props) {
         }
 
         const maxSize = 24; // px
-        const minSize = 12;
+        const minSize = 10;
         const maxLength = 800;
 
         const fontSizePx = getFontSizePx(maxLength, longestLineLength(text), minSize, maxSize);
