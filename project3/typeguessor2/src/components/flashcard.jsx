@@ -12,7 +12,7 @@ function FlashCard(props) {
     2: '#C8E8FF', // Easy - light blue
     3: '#FFEAA7', // Medium - soft yellow
     4: '#FFB347', // Hard - orange
-    5: '#FF6B6B'  // Very Hard - red
+    5: '#FF8B8B'  // Very Hard - red
     };
 
     const handleClick = () => {
