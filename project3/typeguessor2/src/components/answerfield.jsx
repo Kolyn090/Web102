@@ -2,10 +2,8 @@ import React, { useState } from "react"
 import "../style/answerfield.css"
 
 function AnswerField(props) {
-    const [answer, setAnswer] = useState('');
-
     const handleAnswerChange = (event) => {
-        setAnswer(event.target.value);
+        props.setAnswer(event.target.value);
     };
 
     const possibleFeedback = {
@@ -28,7 +26,7 @@ function AnswerField(props) {
         if (props.answers == null) {
             return 'empty';
         }
-        return props.answers.includes(answer.toLowerCase()) ? 'correct' : 'wrong';
+        return props.answers.includes(props.answer.toLowerCase()) ? 'correct' : 'wrong';
     }
 
     function onClickSubmit() {
@@ -45,6 +43,7 @@ function AnswerField(props) {
             if (props.currentStreak > props.longestStreak) {
                 props.setLongestStreak(props.currentStreak);
             }
+            props.setAnsweredCorrectly(false);
             props.setCurrentStreak(0);
         }
     }
@@ -53,7 +52,7 @@ function AnswerField(props) {
         <div>
             <div className="answerfield">
                 <h3 style={{margin: '10px'}}>Answer: </h3>
-                <input type="text" value={answer} onChange={handleAnswerChange}></input>
+                <input type="text" value={props.answer} onChange={handleAnswerChange}></input>
                 <button className="submitbutton" onClick={onClickSubmit}>Submit</button>
             </div>
             <div>
