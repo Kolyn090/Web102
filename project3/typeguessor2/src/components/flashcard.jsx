@@ -7,12 +7,24 @@ function FlashCard(props) {
     var isFlipped = props.isFlipped;
     var onFlip = props.onFlip;
 
+    const difficultyColors = {
+    1: '#DFFFD6', // Very Easy - light green
+    2: '#C8E8FF', // Easy - light blue
+    3: '#FFEAA7', // Medium - soft yellow
+    4: '#FFB347', // Hard - orange
+    5: '#FF6B6B'  // Very Hard - red
+    };
+
     const handleClick = () => {
         onFlip();
     };
 
     function jalapenos(n) {
         return "🌶️".repeat(n);
+    }
+
+    function getbgcolor(n) {
+        return difficultyColors[n];
     }
 
     function CodeBlock({ children }) {
@@ -51,7 +63,7 @@ function FlashCard(props) {
     return (
         <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}>
             <div className="flashcard-inner">
-                <div className="flashcard-front">
+                <div className="flashcard-front" style={{backgroundColor: getbgcolor(props.difficulty)}}>
                     <div style={{padding: '10px'}}>
                         <p>
                             What is the type of { props.ask }?
