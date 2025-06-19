@@ -14,6 +14,7 @@ function Homepage(props) {
     const [longestStreak, setLongestStreak] = useState(0);
     const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
     const [problemIndices, setProblemIndices] = useState(Array.from({length: quizdata.length}, (_, i) => i));
+    const [answer, setAnswer] = useState('');
 
     function ShuffleProblemIndices() {
         function shuffle(array) {
@@ -48,7 +49,10 @@ function Homepage(props) {
         }
     };
 
-    const handleFlip = () => setIsFlipped(!isFlipped);
+    const handleFlip = () => {
+        setIsFlipped(!isFlipped);
+        setAnsweredCorrectly(false);
+    }
 
     const handlePrev = () => {
         setProblemIndex(prevProblemIndex());
@@ -60,6 +64,7 @@ function Homepage(props) {
         setProblemIndex(nextProblemIndex());
         setIsFlipped(false); // Reset flip state on next card
         setFeedbackTag('default'); // Reset feedback
+        setAnswer('');
     };
 
     const getSolution = () => {
@@ -87,6 +92,8 @@ function Homepage(props) {
                             setLongestStreak={setLongestStreak}
                             answeredCorrectly={answeredCorrectly}
                             setAnsweredCorrectly={setAnsweredCorrectly}
+                            answer={answer}
+                            setAnswer={setAnswer}
                             answers={getSolution()}
             ></AnswerField>
             <button onClick={ShuffleProblemIndices} className="submitbutton">Shuffle</button>
