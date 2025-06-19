@@ -1,17 +1,5 @@
 [
     {
-        "ask": "Y",
-        "difficulty": 2,
-        "problem": "type Y<T> = T extends (infer U)[] ? U : T;\ntype Result = Y<string[]>;",
-        "answer": "string"
-    },
-    {
-        "ask": "Z",
-        "difficulty": 3,
-        "problem": "type Z<T> = T extends () => infer R ? R : never;\ntype Result = Z<() => boolean[]>;",
-        "answer": "boolean[]"
-    },
-    {
         "ask": "A",
         "difficulty": 3,
         "problem": "type A<T> = T extends Promise<infer U> ? (U extends Array<infer V> ? V : U) : T;\ntype Result = A<Promise<string[]>>;",
@@ -156,33 +144,15 @@
         "answer": "42"
     },
     {
-    "ask": "A",
-    "difficulty": 3,
-    "problem": "type A<T> = {\n  readonly [K in keyof T]: T[K]\n};\ntype Result = A<{ a: number; b: string }>;",
-    "answer": "{ readonly a: number; readonly b: string }"
-    },
-    {
-        "ask": "B",
-        "difficulty": 3,
-        "problem": "type B<T> = {\n  -readonly [K in keyof T]: T[K]\n};\ntype Result = B<{ readonly a: number; readonly b: string }>;",
-        "answer": "{ a: number; b: string }"
-    },
-    {
-        "ask": "C",
+        "ask": "Y",
         "difficulty": 2,
-        "problem": "type C<T> = keyof T;\ntype Result = C<{ a: number; b: string }>;",
-        "answer": "\"a\" | \"b\""
+        "problem": "type Y<T> = T extends (infer U)[] ? U : T;\ntype Result = Y<string[]>;",
+        "answer": "string"
     },
     {
-        "ask": "D",
-        "difficulty": 4,
-        "problem": "type D<T, V> = {\n  [K in keyof T as T[K] extends V ? K : never]: T[K]\n};\ntype Result = D<{ a: number; b: string; c: number }, number>;",
-        "answer": "{ a: number; c: number }"
-    },
-    {
-        "ask": "E",
-        "difficulty": 4,
-        "problem": "type E<T> = T extends any ? (x: T) => void : never;\ntype Result = E<string>;",
-        "answer": "(x: string) => void"
+        "ask": "Z",
+        "difficulty": 3,
+        "problem": "type Z<T> = T extends () => infer R ? R : never;\ntype Result = Z<() => boolean[]>;",
+        "answer": "boolean[]"
     }
 ]

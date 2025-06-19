@@ -32,7 +32,21 @@ function AnswerField(props) {
     }
 
     function onClickSubmit() {
-        props.setFeedbackTag(verifyAnswerTag());
+        const verified = verifyAnswerTag();
+        props.setFeedbackTag(verified);
+        if (verified == 'correct') {
+            if (!props.answeredCorrectly)
+            {
+                props.setCurrentStreak(props.currentStreak+1);
+                props.setAnsweredCorrectly(true);
+            }
+        }
+        else {
+            if (props.currentStreak > props.longestStreak) {
+                props.setLongestStreak(props.currentStreak);
+            }
+            props.setCurrentStreak(0);
+        }
     }
 
     return (
