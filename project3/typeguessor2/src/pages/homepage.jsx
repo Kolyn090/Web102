@@ -97,8 +97,12 @@ function Homepage(props) {
                             answers={getSolution()}
             ></AnswerField>
             <button onClick={ShuffleProblemIndices} className="submitbutton">Shuffle</button>
-            <button onClick={handlePrev} style={{width: '100px', margin: '10px'}}>Prev</button>
-            <button onClick={handleNext} style={{width: '100px'}}>Next</button>
+            <button onClick={handlePrev} 
+                    style={{width: '100px', margin: '10px'}} 
+                    disabled={index <= 0}>Prev</button>
+            <button onClick={handleNext} 
+                    style={{width: '100px'}} 
+                    disabled={index >= problemIndices.length-1}>Next</button>
         </div>
     )
 }
