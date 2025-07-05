@@ -4,14 +4,15 @@ import "../style/HomePage.css"
 
 function DiscoverPanel(props)
 {
-    if (!props.item && props.hasDiscover) return <p>No result...</p>;
+    const filtered = FilterDataWithBanList(props.data, props.banList);
+    if (!props.item && props.hasDiscover && filtered.length === 0) return <p>No result...</p>;
 
     return (
         <div style={{
             ...props.style,
-            height: props.hasDiscover ? '100vh' : '50vh',
+            height: props.hasDiscover && props.item ? '100vh' : '50vh',
         }}>
-            {props.hasDiscover ? (
+            {props.hasDiscover && props.item ? (
             <Discovered data={props.data}
                 item={props.item}
                 setItem={props.setItem}
@@ -64,20 +65,23 @@ function Discovered(props)
             alignItems: 'center',
             width: '90%',}}>
             <h1>APOD</h1>
-            <h3>{props.item.title}</h3>
-            {props.item.media_type === 'image' ? (
+            <h3>{props.item ? props.item.title : "N/A"}</h3>
+            {props.item && props.item.media_type === 'image' ? (
                 <img src={props.item.url} alt={props.item.title} className="img"/>
             ) : (
-                <p>Media type: {props.item.media_type}</p>
+                <p>Not supported media.</p>
             )}
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '5px'}}>
-                <BanButton text={props.item.date} banList={props.banList} setBanList={props.setBanList}></BanButton>
-                <BanButton text={props.item.copyright || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
-                <BanButton text={props.item.service_version || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
-            </div>
+            {
+                props.item &&
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '5px'}}>
+                    <BanButton text={props.item.date} banList={props.banList} setBanList={props.setBanList}></BanButton>
+                    <BanButton text={props.item.copyright || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
+                    <BanButton text={props.item.service_version || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
+                </div>
+            }
             <button className="button" onClick={() => GoToRandomItem(props.data, props.setItem, props.banList)}>🧑‍🚀Discover</button>
         </div>
     );
