@@ -2,11 +2,26 @@ import React from "react";
 import BanListPanel from "../components/BanListPanel";
 import DiscoverPanel from "../components/DiscoverPanel";
 import HistoryPanel from "../components/HistoryPanel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function HomePage(props)
 {
     const [hasDiscover, setHasDiscover] = useState(false);
+    const [data, setData] = useState(null);
+    const [item, setItem] = useState(null);
+
+    const nasaApiKey = import.meta.env.VITE_NASA_API_KEY;
+    
+    useEffect(() => {
+        const startDate = getLastMonthDate();
+        const endDate = getTodayDate();
+        fetch(`https://api.nasa.gov/planetary/apod?start_date=${startDate}&end_date=${endDate}&api_key=${nasaApiKey}`)
+        .then((res) => res.json())
+        .then((json) => setData(json))
+        .catch((err) => console.error(err));
+    }, []);
+
+    if (!data) return <p>Loading...</p>;
 
     return (
         <div>
@@ -26,7 +41,10 @@ function HomePage(props)
                 width: '45%',
                 borderRadius: '15px'}}
                 hasDiscover={hasDiscover}
-                setHasDiscover={setHasDiscover}/>
+                setHasDiscover={setHasDiscover}
+                data={data}
+                item={item}
+                setItem={setItem}/>
             <HistoryPanel style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.5)', 
                 width: '25%', 
@@ -36,6 +54,23 @@ function HomePage(props)
                 left: 0}}/>
         </div>
     );
+}
+
+function getLastMonthDate() {
+    const today = new Date();
+    today.setMonth(today.getMonth() - 1);
+    return today.toISOString().slice(0, 10);
+}
+
+function getLastYearDate() {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 1);
+    return today.toISOString().slice(0, 10);
+}
+
+function getTodayDate() {
+    const today = new Date();
+    return today.toISOString().slice(0, 10); // "YYYY-MM-DD"
 }
 
 export default HomePage;
