@@ -1,8 +1,11 @@
 import React from "react";
+import BanButton from "./BanButton";
 import "../style/HomePage.css"
 
 function DiscoverPanel(props)
 {
+    if (!props.item && props.hasDiscover) return <p>No result...</p>;
+
     return (
         <div style={{
             ...props.style,
@@ -11,7 +14,9 @@ function DiscoverPanel(props)
             {props.hasDiscover ? (
             <Discovered data={props.data}
                 item={props.item}
-                setItem={props.setItem}/>
+                setItem={props.setItem}
+                banList={props.banList}
+                setBanList={props.setBanList}/>
             ) : (
             <Greeting setHasDiscover={props.setHasDiscover}
                 data={props.data} 
@@ -35,12 +40,12 @@ function Greeting(props)
             alignItems: 'center',
             width: '90%',}}>
             <h1>APOD</h1>
-            <h2>View Past Month Astronomy Picture of the Day from NASA!</h2>
+            <h2>View Past Year's Astronomy Picture of the Day from NASA!</h2>
             <h2>💫✨🌕☀️🕳️🛰️☄️🚀🌌</h2>
             <button className="button" onClick={() => {
                 props.setHasDiscover(true);
                 GoToRandomItem(props.data, props.setItem)
-            }}>Discover</button>
+            }}>🧑‍🚀Discover</button>
         </div>
     );
 }
@@ -59,25 +64,41 @@ function Discovered(props)
             alignItems: 'center',
             width: '90%',}}>
             <h1>APOD</h1>
-            <h2>{props.item.title}</h2>
+            <h3>{props.item.title}</h3>
             {props.item.media_type === 'image' ? (
-                <img src={props.item.url} alt={props.item.title} style={{ maxWidth: '100%' }} className="img"/>
+                <img src={props.item.url} alt={props.item.title} className="img"/>
             ) : (
                 <p>Media type: {props.item.media_type}</p>
             )}
-            <ul>
-                <li><strong>Date:</strong> {props.item.date}</li>
-                <li><strong>Copyright:</strong> {props.item.copyright || 'N/A'}</li>
-                <li><strong>Service_Version:</strong> {props.item.service_version || 'N/A'}</li>
-            </ul>
-            <button className="button" onClick={() => GoToRandomItem(props.data, props.setItem)}>Discover</button>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '5px'}}>
+                <BanButton text={props.item.date} banList={props.banList} setBanList={props.setBanList}></BanButton>
+                <BanButton text={props.item.copyright || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
+                <BanButton text={props.item.service_version || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
+            </div>
+            <button className="button" onClick={() => GoToRandomItem(props.data, props.setItem, props.banList)}>🧑‍🚀Discover</button>
         </div>
     );
 }
 
-const GoToRandomItem = (data, setItem) => {
-    const randomItem = data[Math.floor(Math.random() * data.length)];
+const GoToRandomItem = (data, setItem, banList) => {
+    const filtered = FilterDataWithBanList(data, banList);
+    const randomItem = filtered[Math.floor(Math.random() * filtered.length)];
     setItem(randomItem);
+};
+
+const FilterDataWithBanList = (data, banList) => {
+    if (!banList || banList.length === 0)
+    {
+        return data;
+    }
+    return data.filter(item => {
+        return !banList.includes(item.date || "N/A") && 
+                !banList.includes(item.copyright || "N/A") && 
+                !banList.includes(item.service_version || "N/A");
+    });
 };
 
 export default DiscoverPanel;

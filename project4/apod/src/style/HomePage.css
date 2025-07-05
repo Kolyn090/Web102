@@ -16,7 +16,14 @@
 .img {
     width: 400px;
     height: 400px;
-    object-fit: contain;
+    max-width: 400px;
+    max-height: 400px;
+    object-fit: cover;
     background-color: #000;
     display: block;
+    margin: 0;          /* remove default margin */
+    padding: 10px;         /* remove default padding */
+    border: none;       /* remove any default border */
+    box-sizing: border-box;  /* ensures padding/border don't enlarge box */
+    overflow: hidden;   /* clip any overflow (optional safety) */
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import BanListPanel from "../components/BanListPanel";
+import UnBanListPanel from "../components/UnBanListPanel";
 import DiscoverPanel from "../components/DiscoverPanel";
 import HistoryPanel from "../components/HistoryPanel";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ function HomePage(props)
     const [hasDiscover, setHasDiscover] = useState(false);
     const [data, setData] = useState(null);
     const [item, setItem] = useState(null);
+    const [banList, setBanList] = useState([]);
 
     const nasaApiKey = import.meta.env.VITE_NASA_API_KEY;
     
@@ -25,13 +26,15 @@ function HomePage(props)
 
     return (
         <div>
-            <BanListPanel style={{
+            <UnBanListPanel style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.5)', 
                 width: '25%', 
                 height: '100vh',
                 position: 'absolute',
                 top: 0,
-                right: 0}}/>
+                right: 0}}
+                banList={banList}
+                setBanList={setBanList}/>
             <DiscoverPanel style={{
                 position: 'fixed',      // fixes it relative to viewport
                 top: '50%',             // halfway down the viewport
@@ -44,7 +47,9 @@ function HomePage(props)
                 setHasDiscover={setHasDiscover}
                 data={data}
                 item={item}
-                setItem={setItem}/>
+                setItem={setItem}
+                banList={banList}
+                setBanList={setBanList}/>
             <HistoryPanel style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.5)', 
                 width: '25%', 
