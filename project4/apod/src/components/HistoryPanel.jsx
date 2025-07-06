@@ -5,7 +5,7 @@ function HistoryPanel(props)
     return (
         <div style={props.style}>
             <h2 style={{ color: 'white' }}>History</h2>
-            <h3 style={{ color: 'white' }}>Astronomy picture seen so far.</h3>
+            <h3 style={{ color: 'white' }}>Astronomy pictures seen so far.</h3>
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
