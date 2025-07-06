@@ -56,6 +56,7 @@ GIF created with kdenlive
 ## Notes
 
 Background image by ChillyRoom.
+API: APOD by NASA, https://api.nasa.gov/
 
 ## License
 
