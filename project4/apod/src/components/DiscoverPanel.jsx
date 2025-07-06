@@ -4,7 +4,7 @@ import "../style/HomePage.css"
 
 function DiscoverPanel(props)
 {
-    const filtered = FilterDataWithBanList(props.data, props.banList);
+    const filtered = FilterDataWithBanList(FilterDataWithImageMedia(props.data), props.banList);
     if (!props.item && props.hasDiscover && filtered.length === 0) return <p>No result...</p>;
 
     return (
@@ -17,11 +17,16 @@ function DiscoverPanel(props)
                 item={props.item}
                 setItem={props.setItem}
                 banList={props.banList}
-                setBanList={props.setBanList}/>
+                setBanList={props.setBanList}
+                seenItems={props.seenItems}
+                setSeenItems={props.setSeenItems}/>
             ) : (
             <Greeting setHasDiscover={props.setHasDiscover}
                 data={props.data} 
-                setItem={props.setItem}/>
+                setItem={props.setItem}
+                banList={props.banList}
+                seenItems={props.seenItems}
+                setSeenItems={props.setSeenItems}/>
             )}
         </div>
     );
@@ -45,7 +50,11 @@ function Greeting(props)
             <h2>💫✨🌕☀️🕳️🛰️☄️🚀🌌</h2>
             <button className="button" onClick={() => {
                 props.setHasDiscover(true);
-                GoToRandomItem(props.data, props.setItem)
+                let item = GoToRandomItem(props.data, props.setItem, props.banList);
+                if (item)
+                {
+                    AddToHistory(props.seenItems, props.setSeenItems, item);
+                }
             }}>🧑‍🚀Discover</button>
         </div>
     );
@@ -82,15 +91,26 @@ function Discovered(props)
                     <BanButton text={props.item.service_version || "N/A"} banList={props.banList} setBanList={props.setBanList}></BanButton>
                 </div>
             }
-            <button className="button" onClick={() => GoToRandomItem(props.data, props.setItem, props.banList)}>🧑‍🚀Discover</button>
+            <button className="button" onClick={() => {
+                let item = GoToRandomItem(props.data, props.setItem, props.banList);
+                if (item)
+                {
+                    AddToHistory(props.seenItems, props.setSeenItems, item);
+                }
+            }}>🧑‍🚀Discover</button>
         </div>
     );
 }
 
 const GoToRandomItem = (data, setItem, banList) => {
-    const filtered = FilterDataWithBanList(data, banList);
+    const filtered = FilterDataWithBanList(FilterDataWithImageMedia(data), banList);
     const randomItem = filtered[Math.floor(Math.random() * filtered.length)];
     setItem(randomItem);
+    return randomItem;
+};
+
+const FilterDataWithImageMedia = (data) => {
+    return data.filter(item => item.media_type === 'image');
 };
 
 const FilterDataWithBanList = (data, banList) => {
@@ -103,6 +123,11 @@ const FilterDataWithBanList = (data, banList) => {
                 !banList.includes(item.copyright || "N/A") && 
                 !banList.includes(item.service_version || "N/A");
     });
+};
+
+const AddToHistory = (seenItems, setSeenItems, item) => {
+    const newSeenList = [...seenItems, item];
+    setSeenItems(newSeenList);
 };
 
 export default DiscoverPanel;

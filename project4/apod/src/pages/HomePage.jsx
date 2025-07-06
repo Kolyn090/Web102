@@ -10,11 +10,12 @@ function HomePage(props)
     const [data, setData] = useState(null);
     const [item, setItem] = useState(null);
     const [banList, setBanList] = useState([]);
+    const [seenItems, setSeenItems] = useState([]);
 
     const nasaApiKey = import.meta.env.VITE_NASA_API_KEY;
     
     useEffect(() => {
-        const startDate = getLastMonthDate();
+        const startDate = getLastYearDate();
         const endDate = getTodayDate();
         fetch(`https://api.nasa.gov/planetary/apod?start_date=${startDate}&end_date=${endDate}&api_key=${nasaApiKey}`)
         .then((res) => res.json())
@@ -49,14 +50,17 @@ function HomePage(props)
                 item={item}
                 setItem={setItem}
                 banList={banList}
-                setBanList={setBanList}/>
+                setBanList={setBanList}
+                seenItems={seenItems}
+                setSeenItems={setSeenItems}/>
             <HistoryPanel style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.5)', 
                 width: '25%', 
                 height: '100vh',
                 position: 'absolute',
                 top: 0,
-                left: 0}}/>
+                left: 0}}
+                seenItems={seenItems}/>
         </div>
     );
 }
