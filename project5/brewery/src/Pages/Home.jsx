@@ -4,11 +4,14 @@ import OptionsPanel from "../Components/OptionsPanel";
 import StatsPanel from "../Components/StatsPanel";
 import SearchPanel from "../Components/SearchPanel";
 
-const breweriesAmount = 10;
+const breweriesAmount = 100;
 
 function HomePage(props)
 {
-    const [list, setList] = useState(null);
+    const [sourceData, setSourceData] = useState(null);
+    const [renderData, setRenderData] = useState(null);
+    const [typeInput, setTypeInput] = useState("");
+    const [stateInput, setStateInput] = useState("");
 
     useEffect(() => {
         const getBreweries = async () => {
@@ -16,19 +19,21 @@ function HomePage(props)
             `https://api.openbrewerydb.org/v1/breweries?per_page=${breweriesAmount}`
         )
         const json = await response.json();
-        setList(json);
+            const usJson = json.filter(x=>x.country==="United States");
+            setSourceData(usJson);
+            setRenderData(usJson.slice(0, 10));
         }
     
         getBreweries().catch(console.error)
     }, []);
     
     useEffect(() => {
-        if (list) {
-        console.log(list);
+        if (sourceData) {
+        console.log(sourceData);
         }
-    }, [list]);
+    }, [sourceData]);
 
-    if (!list) return <p>Loading...</p>;
+    if (!sourceData) return <p>Loading...</p>;
     
     return (
         <div>
@@ -53,7 +58,8 @@ function HomePage(props)
                     height: '15%',
                     position: 'absolute',
                     top: 0
-                }}/>
+                }}
+                sourceData={sourceData}/>
 
                 <SearchPanel style={{
                     backgroundColor: 'rgb(242, 192, 120)', 
@@ -61,7 +67,14 @@ function HomePage(props)
                     height: '73%',
                     position: 'absolute',
                     bottom: '10%'
-                }}/>
+                }}
+                sourceData={sourceData}
+                renderData={renderData}
+                setRenderData={setRenderData}
+                typeInput={typeInput}
+                setTypeInput={setTypeInput}
+                stateInput={stateInput}
+                setStateInput={setStateInput}/>
             </div>
         </div>
     )

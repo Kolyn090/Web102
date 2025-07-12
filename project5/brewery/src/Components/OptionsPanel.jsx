@@ -11,7 +11,7 @@ function OptionsPanel(props)
             alignItems: 'center',
             gap: '25px'
         }}>
-            <h1>brewery🍻</h1>
+            <h1>US Brewery Co.🍻</h1>
             <button className="option_button">🛹Dashboard</button>
             <button className="option_button">🔎Search</button>
             <button className="option_button">ℹ️About</button>

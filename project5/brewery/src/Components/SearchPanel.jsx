@@ -10,7 +10,13 @@ function SearchPanel(props)
                 height: '10%',
                 position: 'absolute',
                 top: 0
-            }}/>
+            }}
+            sourceData={props.sourceData}
+            setRenderData={props.setRenderData}
+            typeInput={props.typeInput}
+            setTypeInput={props.setTypeInput}
+            stateInput={props.stateInput}
+            setStateInput={props.setStateInput}/>
 
             <SearchResultZone style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -18,13 +24,31 @@ function SearchPanel(props)
                 height: '85%',
                 position: 'absolute',
                 bottom: 0
-            }}/>
+            }}
+            renderData={props.renderData}/>
         </div>
     );
 }
 
 function SearchBarZone(props)
 {
+    const renderFiltered = () => {
+        const typeInput = props.typeInput.toLowerCase();
+        const stateInput = props.stateInput.toLowerCase();
+        const filterData = props.sourceData
+                            .filter(x => typeInput === "" || x.brewery_type.toLowerCase().startsWith(typeInput))
+                            .filter(x => stateInput === "" || x.state.toLowerCase().startsWith(stateInput));
+        props.setRenderData(filterData.slice(0, 10));
+    };
+
+    const handleTypeChange = (e) => {
+        props.setTypeInput(e.target.value);
+    }
+
+    const handleStateChange = (e) => {
+        props.setStateInput(e.target.value);
+    }
+
     return (
         <div style={{
             ...props.style,
@@ -33,9 +57,9 @@ function SearchBarZone(props)
             justifyContent: 'space-around',
             gap: '25px'
         }}>
-            <InputField title="Brewery Type"/>
-            <InputField title="Country"/>
-            <button>Search</button>
+            <InputField title="Brewery Type" type="text" value={props.typeInput} onChange={handleTypeChange}/>
+            <InputField title="State" type="text" value={props.stateInput} onChange={handleStateChange}/>
+            <button onClick={renderFiltered}>Search</button>
         </div>
     );
 }
@@ -48,26 +72,13 @@ function InputField(props)
             flexDirection: 'column'
         }}>
             <p style={{margin:0, padding:5}}>{props.title}</p>
-            <input/>
+            <input type={props.type} value={props.value} onChange={props.onChange}/>
         </div>
     );
 }
 
 function SearchResultZone(props)
 {
-    const data = [
-        { name: 'John', age: 30, city: 'New York' },
-        { name: 'Jane', age: 25, city: 'Los Angeles' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-        { name: 'Mike', age: 28, city: 'Chicago' },
-    ];
-
     return (
         <div style={{
             ...props.style,
@@ -76,16 +87,18 @@ function SearchResultZone(props)
                 <thead>
                     <tr>
                         <th style={{ textAlign: 'center', padding: '8px' }}>Name</th>
-                        <th style={{ textAlign: 'center', padding: '8px' }}>Age</th>
-                        <th style={{ textAlign: 'center', padding: '8px' }}>City</th>
+                        <th style={{ textAlign: 'center', padding: '8px' }}>Brewery Type</th>
+                        <th style={{ textAlign: 'center', padding: '8px' }}>State</th>
+                        <th style={{ textAlign: 'center', padding: '8px' }}>Address</th>
                     </tr>
                 </thead>
                 <tbody>
-                {data.map((item, index) => (
-                    <tr key={index}>
+                {props.renderData.map((item, index) => (
+                    <tr key={item.id}>
                     <td style={{ padding: '8px' }}>{item.name}</td>
-                    <td style={{ padding: '8px' }}>{item.age}</td>
-                    <td style={{ padding: '8px' }}>{item.city}</td>
+                    <td style={{ padding: '8px' }}>{item.brewery_type}</td>
+                    <td style={{ padding: '8px' }}>{item.state}</td>
+                    <td style={{ padding: '8px' }}>{item.address_1}</td>
                     </tr>
                 ))}
                 </tbody>
