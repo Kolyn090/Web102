@@ -12,6 +12,7 @@ function HomePage(props)
     const [renderData, setRenderData] = useState(null);
     const [typeInput, setTypeInput] = useState("");
     const [stateInput, setStateInput] = useState("");
+    const [numOfAddr, setNumOfAddr] = useState(0);
 
     useEffect(() => {
         const getBreweries = async () => {
@@ -74,7 +75,9 @@ function HomePage(props)
                 typeInput={typeInput}
                 setTypeInput={setTypeInput}
                 stateInput={stateInput}
-                setStateInput={setStateInput}/>
+                setStateInput={setStateInput}
+                numOfAddr={numOfAddr}
+                setNumOfAddr={setNumOfAddr}/>
             </div>
         </div>
     )

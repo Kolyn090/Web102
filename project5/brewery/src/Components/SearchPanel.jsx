@@ -16,7 +16,9 @@ function SearchPanel(props)
             typeInput={props.typeInput}
             setTypeInput={props.setTypeInput}
             stateInput={props.stateInput}
-            setStateInput={props.setStateInput}/>
+            setStateInput={props.setStateInput}
+            numOfAddr={props.numOfAddr}
+            setNumOfAddr={props.setNumOfAddr}/>
 
             <SearchResultZone style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -33,11 +35,19 @@ function SearchPanel(props)
 function SearchBarZone(props)
 {
     const renderFiltered = () => {
+        const getNumberOfAddresses = (company) => {
+            const a1 = company.address_1 != null ? 1 : 0;
+            const a2 = company.address_2 != null ? 1 : 0;
+            const a3 = company.address_3 != null ? 1 : 0;
+            return a1 + a2 + a3;
+        };
+
         const typeInput = props.typeInput.toLowerCase();
         const stateInput = props.stateInput.toLowerCase();
         const filterData = props.sourceData
                             .filter(x => typeInput === "" || x.brewery_type.toLowerCase().startsWith(typeInput))
-                            .filter(x => stateInput === "" || x.state.toLowerCase().startsWith(stateInput));
+                            .filter(x => stateInput === "" || x.state.toLowerCase().startsWith(stateInput))
+                            .filter(x => getNumberOfAddresses(x) >= props.numOfAddr);
         props.setRenderData(filterData.slice(0, 10));
     };
 
@@ -49,6 +59,10 @@ function SearchBarZone(props)
         props.setStateInput(e.target.value);
     }
 
+    const handleNumOfAddrChange = (e) => {
+        props.setNumOfAddr(e.target.value);
+    }
+
     return (
         <div style={{
             ...props.style,
@@ -57,9 +71,28 @@ function SearchBarZone(props)
             justifyContent: 'space-around',
             gap: '25px'
         }}>
-            <InputField title="Brewery Type" type="text" value={props.typeInput} onChange={handleTypeChange}/>
-            <InputField title="State" type="text" value={props.stateInput} onChange={handleStateChange}/>
+            <DropdownList title="Brewery Type" value={props.typeInput} onChange={handleTypeChange}/>
+            <InputField title="State" value={props.stateInput} onChange={handleStateChange}/>
+            <BoundSlider title={`Number of Addresses (≥ ${props.numOfAddr})`} min="1" max="3" step="1" 
+                            value={props.numOfAddr} onChange={handleNumOfAddrChange}/>
             <button onClick={renderFiltered}>Search</button>
+        </div>
+    );
+}
+
+function DropdownList(props)
+{
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            <p style={{margin:0, padding:5}}>{props.title}</p>
+            <select value={props.value} onChange={props.onChange}>
+                <option value="">none</option>
+                <option value="large">large</option>
+                <option value="micro">micro</option>
+            </select>
         </div>
     );
 }
@@ -72,7 +105,21 @@ function InputField(props)
             flexDirection: 'column'
         }}>
             <p style={{margin:0, padding:5}}>{props.title}</p>
-            <input type={props.type} value={props.value} onChange={props.onChange}/>
+            <input type="text" value={props.value} onChange={props.onChange}/>
+        </div>
+    );
+}
+
+function BoundSlider(props)
+{
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            <p style={{margin:0, padding:5}}>{props.title}</p>
+            <input type="range" min={props.min} max={props.max} step={props.step}
+                    value={props.value} onChange={props.onChange}/>
         </div>
     );
 }
