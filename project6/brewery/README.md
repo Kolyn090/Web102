@@ -1,4 +1,4 @@
-# Web Development Project 5 - *US Brewery Co.*
+# Web Development Project 6 - *US Brewery Co.*
 
 Submitted by: **Jianxin Lin**
 
