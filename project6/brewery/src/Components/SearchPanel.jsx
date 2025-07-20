@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 function SearchPanel(props)
 {
@@ -128,29 +129,45 @@ function BoundSlider(props)
 function SearchResultZone(props)
 {
     return (
-        <div style={{
-            ...props.style,
-        }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                    <tr>
-                        <th style={{ textAlign: 'center', padding: '8px' }}>Name</th>
-                        <th style={{ textAlign: 'center', padding: '8px' }}>Brewery Type</th>
-                        <th style={{ textAlign: 'center', padding: '8px' }}>State</th>
-                        <th style={{ textAlign: 'center', padding: '8px' }}>Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {props.renderData.map((item, index) => (
-                    <tr key={item.id}>
-                    <td style={{ padding: '8px' }}>{item.name}</td>
-                    <td style={{ padding: '8px' }}>{item.brewery_type}</td>
-                    <td style={{ padding: '8px' }}>{item.state}</td>
-                    <td style={{ padding: '8px' }}>{item.address_1}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+        <div style={{ ...props.style }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+            <tr>
+                <th style={{ textAlign: 'center', padding: '8px' }}>Name</th>
+                <th style={{ textAlign: 'center', padding: '8px' }}>Brewery Type</th>
+                <th style={{ textAlign: 'center', padding: '8px' }}>State</th>
+                <th style={{ textAlign: 'center', padding: '8px' }}>Address</th>
+                <th style={{ textAlign: 'center', padding: '8px' }}>Details</th> {/* New header */}
+            </tr>
+            </thead>
+            <tbody>
+            {props.renderData.map((item) => (
+                <tr key={item.id}>
+                <td style={{ padding: '8px' }}>{item.name}</td>
+                <td style={{ padding: '8px' }}>{item.brewery_type}</td>
+                <td style={{ padding: '8px' }}>{item.state}</td>
+                <td style={{ padding: '8px' }}>{item.address_1}</td>
+                <td style={{ padding: '8px', textAlign: 'center' }}>
+                    <Link
+                        to={`/brewery/${item.id}`}
+                        state={{ brewery: item }}
+                        style={{
+                            padding: '4px 8px',
+                            backgroundColor: '#007bff',
+                            color: 'white',
+                            borderRadius: '4px',
+                            textDecoration: 'none',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                        }}
+                        >
+                        View Details
+                    </Link>
+                </td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
         </div>
     );
 }
