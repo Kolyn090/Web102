@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 
 function SearchPanel(props)
 {
@@ -34,34 +35,34 @@ function SearchPanel(props)
 
 function SearchBarZone(props)
 {
-    const renderFiltered = () => {
-        const getNumberOfAddresses = (company) => {
-            const a1 = company.address_1 != null ? 1 : 0;
-            const a2 = company.address_2 != null ? 1 : 0;
-            const a3 = company.address_3 != null ? 1 : 0;
-            return a1 + a2 + a3;
-        };
-
-        const typeInput = props.typeInput.toLowerCase();
-        const stateInput = props.stateInput.toLowerCase();
-        const filterData = props.sourceData
-                            .filter(x => typeInput === "" || x.brewery_type.toLowerCase().startsWith(typeInput))
-                            .filter(x => stateInput === "" || x.state.toLowerCase().startsWith(stateInput))
-                            .filter(x => getNumberOfAddresses(x) >= props.numOfAddr);
-        props.setRenderData(filterData.slice(0, 10));
+    const getNumberOfAddresses = (company) => {
+        const a1 = company.address_1 != null ? 1 : 0;
+        const a2 = company.address_2 != null ? 1 : 0;
+        const a3 = company.address_3 != null ? 1 : 0;
+        return a1 + a2 + a3;
     };
 
-    const handleTypeChange = (e) => {
-        props.setTypeInput(e.target.value);
-    }
+    const getFilteredData = () => {
+        const typeInputLower = props.typeInput.toLowerCase();
+        const stateInputLower = props.stateInput.toLowerCase();
 
-    const handleStateChange = (e) => {
-        props.setStateInput(e.target.value);
-    }
+        return props.sourceData
+            .filter(x => typeInputLower === "" || x.brewery_type.toLowerCase().startsWith(typeInputLower))
+            .filter(x => stateInputLower === "" || x.state.toLowerCase().startsWith(stateInputLower))
+            .filter(x => getNumberOfAddresses(x) >= props.numOfAddr);
+    };
 
-    const handleNumOfAddrChange = (e) => {
-        props.setNumOfAddr(e.target.value);
-    }
+    const renderFiltered = () => {
+        props.setRenderData(getFilteredData().slice(0, 10));
+    };
+
+    useEffect(() => {
+        renderFiltered();
+    }, [props.typeInput, props.stateInput, props.numOfAddr, props.sourceData]);
+
+    const handleTypeChange = (e) => props.setTypeInput(e.target.value);
+    const handleStateChange = (e) => props.setStateInput(e.target.value);
+    const handleNumOfAddrChange = (e) => props.setNumOfAddr(e.target.value);
 
     return (
         <div style={{
