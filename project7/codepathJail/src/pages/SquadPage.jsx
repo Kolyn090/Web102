@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../database/client";
 import { Link } from "react-router-dom";
 import InmateCard from "../components/InmateCard"
+import camelToTitle from "../util/CamelToTitle";
 
 function SquadPage(props)
 {
@@ -61,8 +62,8 @@ function SquadPage(props)
                                     imageUrl={inmateImagePath + inmate.inmate + '.png'} 
                                     fields={[
                                         { label: 'Name', value: inmate.name },
-                                        { label: 'Helper', value: inmate.helperType },
-                                        { label: 'Time Recruited', value: new Date(inmate.created_at).toISOString().split('T')[0]},
+                                        { label: 'Helper', value: camelToTitle(inmate.helperType) },
+                                        { label: 'Date Recruited', value: new Date(inmate.created_at).toISOString().split('T')[0]},
                                         { label: 'Years in Prison', value: inmate.years },
                                         // { label: 'Inmate', value: inmate.inmate },
                                         // { label: 'Weapon', value: inmate.weapon },

@@ -28,7 +28,7 @@ function CreatePage(props)
             })
             .select();
         
-        // window.location = "/";
+        window.location = "/squad"
     };
 
     const allInmates = Object.values(Inmate);

@@ -9,6 +9,8 @@ import LocksmithPage from './pages/LocksmithPage';
 import WatchmanPage from './pages/WatchmanPage';
 import SquadPage from './pages/SquadPage';
 import DetailPage from './pages/DetailPage'
+import SummaryPage from './pages/SummaryPage'
+import EditPage from './pages/EditPage';
 
 function App() {
     const [name, setName] = useState('');
@@ -67,6 +69,12 @@ function App() {
                         </Route>
                         <Route path="/squad" element={<SquadPage/>} />
                         <Route path="inmate/:id" element={<DetailPage/>} />
+                        <Route path="edit/:id" element={<EditPage {...inmateProps}/>}>
+                            <Route path="hitman" element={<HitmanPage {...inmateProps}/>} />
+                            <Route path="locksmith" element={<LocksmithPage {...inmateProps}/>} />
+                            <Route path="watchman" element={<WatchmanPage {...inmateProps}/>} />
+                        </Route>
+                        <Route path="summary" element={<SummaryPage/>} />
                     </Routes>
                 </main>
             </div>

@@ -22,6 +22,9 @@ function OptionsPanel(props)
             <Link to="/squad" className="button-link">
                 Squad
             </Link>
+            <Link to="/summary" className="button-link">
+                Summary
+            </Link>
         </div>
     );
 }
