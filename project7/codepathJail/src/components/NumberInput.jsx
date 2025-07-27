@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-export default function NumberInput({ title = "Enter number:", onChange }) {
-  const [num, setNum] = useState('');
+export default function NumberInput({ title = "Enter number:", initial = 0, onChange }) {
+  const [num, setNum] = useState(initial);
   const id = crypto.randomUUID(); 
 
   const handleChange = (e) => {

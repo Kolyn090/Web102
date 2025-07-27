@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-export default function TextInput({ title = "Enter text:", onChange }) {
-  const [text, setText] = useState('');
+export default function TextInput({ title = "Enter text:", initial = "", onChange }) {
+  const [text, setText] = useState(initial);
   const id = crypto.randomUUID(); 
 
   const handleChange = (e) => {

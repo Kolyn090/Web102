@@ -16,15 +16,18 @@ function CommonInmatePanel(props)
             <TextInput
                 title="Inmate Code (Name):"
                 onChange={props.setName}
+                initial={props.name}
             />
             <NumberInput 
                 title="Years in Prison:"
                 onChange={props.setYears}
+                initial={props.years}
             />
             <SingleChoiceList
                 title="Inmate:"
                 options={props.allInmates}
                 onChange={props.setSelectedInmate}
+                initial={props.selectedInmate}
             />
         </div>
     );

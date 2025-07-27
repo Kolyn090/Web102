@@ -9,8 +9,8 @@ function chunkArray(array, chunkSize) {
   return chunks;
 }
 
-export default function SingleChoiceList({ title, options, onChange }) {
-  const [selected, setSelected] = useState(null);
+export default function SingleChoiceList({ title, options, initial=null, onChange }) {
+  const [selected, setSelected] = useState(initial);
 
   const handleSelect = (option) => {
     setSelected(option);

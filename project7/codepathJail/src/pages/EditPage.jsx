@@ -79,15 +79,15 @@ function EditPage(props)
                     marginTop: '-40px',
                     marginBottom: '20px'
                 }}>
-                    <Link to="hitman">
+                    <Link to="hitman" state={{invitedInmate: invitedInmate}}>
                         <button onClick={() => props.setHelperType(HelperType.Hitman)}>Hitman</button>
                     </Link>
 
-                    <Link to="locksmith">
+                    <Link to="locksmith" state={{invitedInmate: invitedInmate}}>
                         <button onClick={() => props.setHelperType(HelperType.Locksmith)}>Locksmith</button>
                     </Link>
 
-                    <Link to="watchman">
+                    <Link to="watchman" state={{invitedInmate: invitedInmate}}>
                         <button onClick={() => props.setHelperType(HelperType.Watchman)}>Watchman</button>
                     </Link>
                 </div>
@@ -95,6 +95,9 @@ function EditPage(props)
                 <Outlet/>
 
                 <CommonInmatePanel 
+                    name={invitedInmate.name}
+                    years={invitedInmate.years}
+                    selectedInmate={invitedInmate.inmate}
                     setName={props.setName}
                     setYears={props.setYears}
                     setSelectedInmate={props.setSelectedInmate}
