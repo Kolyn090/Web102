@@ -73,7 +73,7 @@ function SummaryPage(props)
                 gap: '25px',
                 marginBottom: '20px'
             }}>
-                <PieChart width={400} height={300}>
+                <PieChart width={400} height={400}>
                     <Pie
                         data={renderPieData}
                         dataKey="value"
@@ -94,7 +94,7 @@ function SummaryPage(props)
 
                 <BarChart
                     width={500}
-                    height={300}
+                    height={400}
                     data={renderBarData}
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                     >

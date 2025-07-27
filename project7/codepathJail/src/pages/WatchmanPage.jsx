@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Drinker from "../data/drinker.ts";
 import Vision from "../data/vision.ts";
 import NumberInput from "../components/NumberInput.jsx";
@@ -11,6 +11,14 @@ function WatchmanPage(props)
     const allVisions = Object.values(Vision);
     const location = useLocation();
     const invitedInmate = location.state?.invitedInmate;
+
+    useEffect(() => {
+        if (invitedInmate) {
+            props.setDrinker(invitedInmate.drink);
+            props.setVision(invitedInmate.vision);
+            props.setHeight(invitedInmate.height);
+        }
+    }, [invitedInmate]);
 
     return (
         <div style={{

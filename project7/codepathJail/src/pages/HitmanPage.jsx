@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NumberInput from "../components/NumberInput.jsx";
 import SingleChoiceList from "../components/SingleChoiceList.jsx";
 import Weapon from '../data/weapon.ts'
@@ -11,6 +11,14 @@ function HitmanPage(props)
     const allBodyMasses = Object.values(BodyMass);
     const location = useLocation();
     const invitedInmate = location.state?.invitedInmate;
+
+    useEffect(() => {
+        if (invitedInmate) {
+            props.setWeapon(invitedInmate.weapon);
+            props.setBodyMass(invitedInmate.bodyMass);
+            props.setWeightlifting(invitedInmate.weightlifting);
+        }
+    });
 
     return (
         <div style={{

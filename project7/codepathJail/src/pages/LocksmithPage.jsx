@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NumberInput from "../components/NumberInput.jsx";
 import SingleChoiceList from "../components/SingleChoiceList.jsx";
 import KeyColor from '../data/keyColor.ts'
@@ -9,6 +9,13 @@ function LocksmithPage(props)
     const allKeyColors = Object.values(KeyColor);
     const location = useLocation();
     const invitedInmate = location.state?.invitedInmate;
+
+    useEffect(() => {
+        if (invitedInmate) {
+            props.setKeyColor(invitedInmate.lockColor);
+            props.setExperience(invitedInmate.experience);
+        }
+    }, [invitedInmate]);
 
     return (
         <div style={{

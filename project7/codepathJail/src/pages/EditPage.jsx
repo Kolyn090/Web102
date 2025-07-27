@@ -36,6 +36,15 @@ function EditPage(props)
         }
     }, [id]);
 
+    useEffect(() => {
+        if (invitedInmate)
+        {
+            props.setName(invitedInmate.name);
+            props.setYears(invitedInmate.years);
+            props.setSelectedInmate(invitedInmate.inmate);
+        }
+    }, [invitedInmate])
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!invitedInmate) return <p>No inmate found.</p>;
