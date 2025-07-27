@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import camelToTitle from "../util/CamelToTitle";
+import { supabase } from "../database/client.js";
 
 function DetailPage(props)
 {
@@ -9,6 +10,17 @@ function DetailPage(props)
     const location = useLocation();
     const inmate = location.state?.invitedInmate;
     const inmateImagePath = '/assets/escapists/';
+
+    const fireInmate = async (event) => {
+        event.preventDefault();
+
+        await supabase
+            .from('Invited Inmates')
+            .delete()
+            .eq('id', id); 
+
+        window.location = "/squad";
+    };
 
     const fields=[
                 { label: 'Name', value: inmate.name },
@@ -70,7 +82,7 @@ function DetailPage(props)
                                 }} >
                                     <button style={{ width: 210 }}>Retrain him</button>
                                 </Link>
-                                <button style={{ width: 210 }}>Fire him</button>
+                                <button style={{ width: 210 }} onClick={fireInmate}>Fire him</button>
                         </div>
                     </div>
                 ) : 

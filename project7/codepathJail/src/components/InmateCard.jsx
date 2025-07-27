@@ -28,7 +28,7 @@ function InmateCard(props)
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gap: '8px',
+                gap: '4px',
                 padding: '12px',
                 fontSize: 20
             }}>

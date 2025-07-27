@@ -13,7 +13,7 @@ function SquadPage(props)
         const { data, error } = await supabase
             .from("Invited Inmates") // change to match your table name
             .select()
-            .order('created_at', { ascending: true });
+            .order('created_at', { ascending: false });
 
             if (error) {
                 console.error('Error fetching inmates:', error);
