@@ -19,7 +19,7 @@ export default function SingleChoiceList({ title, options, onChange }) {
     }
   };
 
-  const optionChunks = chunkArray(options, 5);
+  const optionChunks = chunkArray(options, 4);
 
   return (
     <div style={{ fontSize: 20 }}>

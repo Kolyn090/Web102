@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 export default function NumberInput({ title = "Enter number:", onChange }) {
   const [num, setNum] = useState('');
+  const id = crypto.randomUUID(); 
 
   const handleChange = (e) => {
     setNum(e.target.value);
@@ -12,8 +13,9 @@ export default function NumberInput({ title = "Enter number:", onChange }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 300, fontSize: 24}}>
-      <label style={{ marginBottom: 6, fontWeight: 'bold' }}>{title}</label>
+      <label style={{ marginBottom: 6, fontWeight: 'bold' }} htmlFor={id}>{title}</label>
       <input
+        id={id}
         type="number"
         value={num}
         onChange={handleChange}

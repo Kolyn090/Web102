@@ -4,12 +4,8 @@ import TextInput from "../components/TextInput.jsx";
 import NumberInput from "../components/NumberInput.jsx";
 import SingleChoiceList from "../components/SingleChoiceList.jsx";
 
-function CommonInmatePanel({onNameChange, onYearsChange, onInmateChange, allInmates})
+function CommonInmatePanel(props)
 {
-    const [name, setName] = useState('');
-    const [years, setYears] = useState(0);
-    const [selectedInmate, setSelectedInmate] = useState(null);
-
     return (
         <div style={{
             display: 'flex',
@@ -19,16 +15,16 @@ function CommonInmatePanel({onNameChange, onYearsChange, onInmateChange, allInma
         }}>
             <TextInput
                 title="Inmate Code (Name):"
-                onChange={setName}
+                onChange={props.setName}
             />
             <NumberInput 
                 title="Years in Prison:"
-                onChange={setYears}
+                onChange={props.setYears}
             />
             <SingleChoiceList
                 title="Inmate:"
-                options={allInmates}
-                onChange={setSelectedInmate}
+                options={props.allInmates}
+                onChange={props.setSelectedInmate}
             />
         </div>
     );

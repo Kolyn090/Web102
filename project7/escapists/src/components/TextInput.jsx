@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 export default function TextInput({ title = "Enter text:", onChange }) {
   const [text, setText] = useState('');
+  const id = crypto.randomUUID(); 
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -12,8 +13,9 @@ export default function TextInput({ title = "Enter text:", onChange }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 300, fontSize: 24}}>
-      <label style={{ marginBottom: 6, fontWeight: 'bold' }}>{title}</label>
+      <label style={{ marginBottom: 6, fontWeight: 'bold' }} htmlFor={id}>{title}</label>
       <input
+        id={id}
         type="text"
         value={text}
         onChange={handleChange}

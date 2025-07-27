@@ -1,14 +1,35 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Inmate from '../data/inmate.ts' 
 import { Outlet, Link } from 'react-router-dom';
 import CommonInmatePanel from "../components/CommonInmatePanel.jsx";
+import { supabase } from "../database/client.js";
+import HelperType from "../data/helperType.ts";
 
 function CreatePage(props)
 {
-    const [selectedInmate, setSelectedInmate] = useState(null);
-    const [name, setName] = useState('');
-    const [years, setYears] = useState(0);
+    const inviteInmate = async (event) => {
+        event.preventDefault();
+        await supabase
+            .from('Invited Inmates')
+            .insert({
+                name: props.name,
+                years: parseInt(props.years),
+                inmate: props.selectedInmate,
+                weapon: props.weapon,
+                bodyMass: props.bodyMass,
+                weightlifting: parseFloat(props.weightlifting),
+                lockColor: props.keyColor,
+                experience: parseInt(props.experience),
+                drink: props.drink,
+                vision: props.vision,
+                height: parseFloat(props.height),
+                helperType: props.helperType
+            })
+            .select();
+        
+        // window.location = "/";
+    };
 
     const allInmates = Object.values(Inmate);
     const inmateImagePath = '/assets/escapists/';
@@ -45,26 +66,31 @@ function CreatePage(props)
                 marginBottom: '20px'
             }}>
                 <Link to="hitman">
-                    <button>Hitman</button>
+                    <button onClick={() => props.setHelperType(HelperType.Hitman)}>Hitman</button>
                 </Link>
 
                 <Link to="locksmith">
-                    <button>Locksmith</button>
+                    <button onClick={() => props.setHelperType(HelperType.Locksmith)}>Locksmith</button>
                 </Link>
 
                 <Link to="watchman">
-                    <button>Watchman</button>
+                    <button onClick={() => props.setHelperType(HelperType.Watchman)}>Watchman</button>
                 </Link>
             </div>
 
             <Outlet/>
 
             <CommonInmatePanel 
-                onNameChange={setName}
-                onYearsChange={setYears}
-                onInmateChange={setSelectedInmate}
+                setName={props.setName}
+                setYears={props.setYears}
+                setSelectedInmate={props.setSelectedInmate}
                 allInmates={allInmates}
             />
+
+            <button 
+                style={{marginTop: '-40px'}}
+                onClick={inviteInmate}
+            >Invite</button>
         </div>
     )
 }

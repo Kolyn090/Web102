@@ -1,14 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import NumberInput from "../components/NumberInput.jsx";
 import SingleChoiceList from "../components/SingleChoiceList.jsx";
 import KeyColor from '../data/keyColor.ts'
 
 function LocksmithPage(props)
 {
-    const [keyColor, setKeyColor] = useState(null);
-    const [experience, setExperience] = useState(0);
-
     const allKeyColors = Object.values(KeyColor);
 
     return (
@@ -21,11 +17,11 @@ function LocksmithPage(props)
             <SingleChoiceList
                 title="Best lock color:"
                 options={allKeyColors}
-                onChange={setKeyColor}
+                onChange={props.setKeyColor}
             />
             <NumberInput
                 title="Experience (locks)"
-                onChange={setExperience}
+                onChange={props.setExperience}
             />
         </div>
     );
