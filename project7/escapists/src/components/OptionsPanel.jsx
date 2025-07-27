@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+import '../styles/index.css'
 
 function OptionsPanel(props)
 {
@@ -11,9 +13,15 @@ function OptionsPanel(props)
             gap: '25px',
             padding: '15px'
         }}>
-            <button> Jail </button>
-            <button> Invite Inmate </button>
-            <button> Squad </button>
+            <Link to="/" className="button-link">
+                Jail
+            </Link>
+            <Link to="/create" className="button-link">
+                Invite Inmate
+            </Link>
+            <Link to="/squad" className="button-link">
+                Squad
+            </Link>
         </div>
     );
 }

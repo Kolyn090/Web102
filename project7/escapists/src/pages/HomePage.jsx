@@ -24,9 +24,9 @@ function HomePage(props)
                 inmateImageUrls.map((src, i) => (
                     <img key={i} src={src} 
                         style={{
-                        width: '64px',      // double the original size
+                        width: '64px',
                         height: '64px',
-                        imageRendering: 'pixelated',  // nearest neighbor scaling
+                        imageRendering: 'pixelated',
                     }}></img>
                 ))
             }
