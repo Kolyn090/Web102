@@ -45,32 +45,38 @@ function SquadPage(props)
                     </div>
                 ) :
                 (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                        gap: '16px',
-                        padding: '16px'
-                    }}>
-                        {invitedInmates.map((inmate, i) => (
-                            <InmateCard 
-                                key={i} 
-                                imageUrl={inmateImagePath + inmate.inmate + '.png'} 
-                                fields={[
-                                    { label: 'Name', value: inmate.name },
-                                    { label: 'Helper Type', value: inmate.helperType },
-                                    { label: 'Years in Prison', value: inmate.years },
-                                    { label: 'Inmate', value: inmate.inmate },
-                                    { label: 'Weapon', value: inmate.weapon },
-                                    { label: 'Body Mass', value: inmate.bodyMass },
-                                    { label: 'Weightlifting', value: inmate.weightlifting },
-                                    { label: 'Lock Color', value: inmate.lockColor },
-                                    { label: 'Experience', value: inmate.experience },
-                                    { label: 'Drink', value: inmate.drink },
-                                    { label: 'Vision', value: inmate.vision },
-                                    { label: 'Height', value: inmate.height },
-                                ]}
-                            />
-                        ))}
+                    <div>
+                        <h2>Squad</h2>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                            gap: '16px',
+                            padding: '16px'
+                        }}>
+                            {invitedInmates.map((inmate, i) => (
+                                <InmateCard 
+                                    id={inmate.id}
+                                    key={i} 
+                                    invitedInmate={inmate}
+                                    imageUrl={inmateImagePath + inmate.inmate + '.png'} 
+                                    fields={[
+                                        { label: 'Name', value: inmate.name },
+                                        { label: 'Helper', value: inmate.helperType },
+                                        { label: 'Time Recruited', value: new Date(inmate.created_at).toISOString().split('T')[0]},
+                                        { label: 'Years in Prison', value: inmate.years },
+                                        // { label: 'Inmate', value: inmate.inmate },
+                                        // { label: 'Weapon', value: inmate.weapon },
+                                        // { label: 'Body Mass', value: inmate.bodyMass },
+                                        // { label: 'Weightlifting', value: inmate.weightlifting },
+                                        // { label: 'Lock Color', value: inmate.lockColor },
+                                        // { label: 'Experience', value: inmate.experience },
+                                        // { label: 'Drink', value: inmate.drink },
+                                        // { label: 'Vision', value: inmate.vision },
+                                        // { label: 'Height', value: inmate.height },
+                                    ]}
+                                />
+                            ))}
+                        </div>
                     </div>
                 )
             }

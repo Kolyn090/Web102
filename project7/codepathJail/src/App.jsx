@@ -8,6 +8,7 @@ import HitmanPage from './pages/HitmanPage';
 import LocksmithPage from './pages/LocksmithPage';
 import WatchmanPage from './pages/WatchmanPage';
 import SquadPage from './pages/SquadPage';
+import DetailPage from './pages/DetailPage'
 
 function App() {
     const [name, setName] = useState('');
@@ -64,7 +65,8 @@ function App() {
                             <Route path="locksmith" element={<LocksmithPage {...inmateProps}/>} />
                             <Route path="watchman" element={<WatchmanPage {...inmateProps}/>} />
                         </Route>
-                        <Route path="/squad" element={<SquadPage/>}></Route>
+                        <Route path="/squad" element={<SquadPage/>} />
+                        <Route path="inmate/:id" element={<DetailPage/>} />
                     </Routes>
                 </main>
             </div>

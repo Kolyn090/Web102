@@ -1,9 +1,15 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function InmateCard(props)
 {
     return (
-        <div style={{
+        <Link
+            to={`/inmate/${props.id}`} 
+            state={{
+                invitedInmate: props.invitedInmate
+            }}
+            style={{
             width: 250,
             border: '1px solid #ccc',
             borderRadius: '12px',
@@ -32,7 +38,7 @@ function InmateCard(props)
                 </div>
                 ))}
             </div>
-        </div>
+        </Link>
     );
 }
 
