@@ -12,7 +12,7 @@ function PostPage() {
     const post = {
         title: 'Example Post Title',
         description: 'Some description here.',
-        imageUrl: 'https://via.placeholder.com/300x200', // try replacing with invalid URL to test fallback
+        imageUrl: 'https://via.placeholder.com/300x200',
         createdAt: 'August 2, 2025',
         upvotes: 42
     };
@@ -32,40 +32,45 @@ function PostPage() {
                 gap: '16px',
                 padding: '20px',
                 fontFamily: 'sans-serif',
-                width: '90%',
+                width: '90%'
             }}>
                 {/* Creation Time */}
-                <div style={{ fontSize: '0.8rem', color: 'gray' }}>
+                <div style={{ fontSize: '0.8rem', color: 'gray', textAlign: 'start' }}>
                     Created: {post.createdAt}
                 </div>
 
                 {/* Title */}
-                <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign: 'start' }}>
                     {post.title}
                 </div>
 
                 {/* Description */}
-                <div style={{ fontSize: '1rem', lineHeight: '1.4', color: '#444' }}>
+                <div style={{ fontSize: '1rem', lineHeight: '1.4', color: '#444', textAlign: 'start' }}>
                     {post.description}
                 </div>
 
-                {/* Image (conditionally rendered if URL seems valid) */}
-                {post.imageUrl && !imageFailed ? (
-                    <img
-                        src={post.imageUrl}
-                        alt="Post"
-                        style={{
-                            height: '200px',
-                            objectFit: 'cover',
-                            borderRadius: '8px'
-                        }}
-                        onError={() => setImageFailed(true)}
-                    />
-                ) : (
-                    <p style={{ color: '#888', fontStyle: 'italic' }}>
-                        No image provided.
-                    </p>
-                )}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start'
+                }}>
+                    {/* Image (conditionally rendered if URL seems valid) */}
+                    {post.imageUrl && !imageFailed ? (
+                        <img
+                            src={post.imageUrl}
+                            alt="Post"
+                            style={{
+                                height: '200px',
+                                objectFit: 'cover',
+                                borderRadius: '8px'
+                            }}
+                            onError={() => setImageFailed(true)}
+                        />
+                    ) : (
+                        <p style={{ color: '#888', fontStyle: 'italic' }}>
+                            No image provided.
+                        </p>
+                    )}
+                </div>
 
                 {/* Upvotes and Edit Button */}
                 <div style={{
@@ -108,8 +113,12 @@ function PostPage() {
                 </div>
 
                 {/* Comments Section */}
-                <div style={{ marginTop: '12px' }}>
-                    <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Comments</div>
+                <div style={{ 
+                    marginTop: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}>
+                    <div style={{ fontWeight: 'bold', marginBottom: '8px', textAlign: 'start' }}>Comments</div>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -120,7 +129,8 @@ function PostPage() {
                             <div key={i} style={{
                                 backgroundColor: '#f4f4f4',
                                 padding: '8px 10px',
-                                borderRadius: '6px'
+                                borderRadius: '6px',
+                                textAlign: 'start'
                             }}>
                                 {c}
                             </div>

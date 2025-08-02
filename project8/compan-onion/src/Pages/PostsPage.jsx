@@ -49,7 +49,7 @@ function SortByPanel()
                 width: '90%',
                 display: 'flex',
                 flexDirection: 'row',
-                gap: '20px',
+                gap: '5px',
                 justifyContent: 'flex-end'
             }}>
                 <button style={{
