@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AnimateBG from './Components/AnimateBG';
 import HeaderBar from './Components/HeaderBar';
 import PostsPage from './Pages/PostsPage';
+import CreatePostPage from './Pages/CreatePostPage';
+import PostPage from './Pages/PostPage';
 
 function App() {
     return (
@@ -16,7 +18,7 @@ function App() {
                     height: '100%'
                 }}/>
 
-                <div className='center-container'>
+                <main className='center-container'>
                     <HeaderBar style={{
                         width: '90%',
                         height: 50,
@@ -29,15 +31,21 @@ function App() {
                         backgroundColor: 'white'
                     }}/>
 
-                    <PostsPage style={{
-                        width: '90%', 
-                        height: '95%',
-                        position: 'absolute',
-                        top: '5%',
-                        left: '5%',
-                        backgroundColor: 'white'
-                    }}/>
-                </div>
+                    <div style={{
+                            width: '90%', 
+                            height: '95%',
+                            position: 'absolute',
+                            top: '5%',
+                            left: '5%',
+                            backgroundColor: 'white'
+                    }}>
+                        <Routes>
+                            <Route path="/" element={<PostsPage/>} />
+                            <Route path="/create" element={<CreatePostPage/>} />
+                            <Route path="/post" element={<PostPage />} />
+                        </Routes>
+                    </div>
+                </main>
             </div>
         </Router>
     )
