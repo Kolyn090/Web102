@@ -54,20 +54,20 @@ function SortByPanel()
                 justifyContent: 'flex-end'
             }}>
                 <OnionButton 
-                    borderColor={'#ccc'}
+                    borderColor={'#FEA405'}
                     backgroundColor={'#fff'}
                     height={35}
                     onionId={4}
-                    textColor={'#333'}
+                    textColor={'#FEA405'}
                     text={'Newest'}
                 />
 
                 <OnionButton 
-                    borderColor={'#ccc'}
+                    borderColor={'#F97A00'}
                     backgroundColor={'#fff'}
                     height={35}
                     onionId={5}
-                    textColor={'#333'}
+                    textColor={'#F97A00'}
                     text={'Popularity'}
                 />
             </div>

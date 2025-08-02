@@ -1,6 +1,6 @@
 import React from "react";
 import '../Styles/HideIfNarrow.css'
-import OnionButton from "./OnionButton";
+import LinkOnionButton from "./LinkOnionButton";
 
 function HeaderBar(props)
 {
@@ -56,7 +56,8 @@ function HeaderOptionsPanel()
             justifyContent: 'flex-end',
             gap:5
         }}>
-            <OnionButton 
+            <LinkOnionButton
+                to={""} 
                 borderColor={'#ccc'}
                 backgroundColor={'#fff'}
                 height={35}
@@ -65,7 +66,8 @@ function HeaderOptionsPanel()
                 text={'Home'}
             />
 
-            <OnionButton 
+            <LinkOnionButton 
+                to={"create"}
                 borderColor={'#ccc'}
                 backgroundColor={'#fff'}
                 height={35}

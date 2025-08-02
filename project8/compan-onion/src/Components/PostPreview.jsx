@@ -1,6 +1,8 @@
 import React from "react";
 import '../Styles/Font.css'
 import '../Styles/HideIfNarrow.css'
+import { Link } from 'react-router-dom';
+import OnionButton from "./OnionButton";
 
 function PostPreview()
 {
@@ -17,13 +19,14 @@ function PostPreview()
             alignItems: 'flex-start',
             gap: 25
         }}>
-            <div style={{
+            <Link to="post"
+                style={{
                 width: '70%',
                 left: 0
             }}>
                 <TitleLabel />
                 <CreationDateLabel />
-            </div>
+            </Link>
 
             <div style={{
                 display: 'flex',
@@ -48,7 +51,8 @@ function TitleLabel()
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            textAlign: 'left'
+            textAlign: 'left',
+            color: 'black'
         }}>
             This is a very long title that should be truncated with ellipsis if it exceeds the container
         </div>
@@ -73,19 +77,15 @@ function CreationDateLabel()
 function UpvoteButton()
 {
     return (
-        <button style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '6px',
-            backgroundColor: '#fff',
-            cursor: 'pointer',
-            height: 35
-        }}>
-            <img src="./img/onion/onion (3).png" style={{height: 35}}/>
-            <span className="hide_if_narrow" style={{ fontSize: '16px', color: '#333' }}>11 Upvotes</span>
-        </button>
+        <OnionButton 
+            to={"create"}
+            borderColor={'#ccc'}
+            backgroundColor={'#fff'}
+            height={35}
+            onionId={3}
+            textColor={'#333'}
+            text={'11 Upvotes'}
+        />
     );
 }
 
