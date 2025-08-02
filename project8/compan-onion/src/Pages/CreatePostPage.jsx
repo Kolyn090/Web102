@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import OnionButton from "../Components/OnionButton";
 
 function CreatePostPage()
 {
@@ -78,20 +79,15 @@ function CreatePostPage()
 function CreateButton(props)
 {
     return (
-        <button style={{
-            ...props.style,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '6px',
-            backgroundColor: '#fff',
-            cursor: 'pointer',
-            height: 35,
-        }}>
-            <img src="./img/onion/onion (2).png" style={{height: 35}}/>
-            <span style={{ fontSize: '16px', color: '#333' }}>Create</span>
-        </button>
+        <OnionButton 
+            style={props.style}
+            borderColor={'#ccc'}
+            backgroundColor={'#fff'}
+            height={35}
+            onionId={2}
+            textColor={'#333'}
+            text={'Create'}
+        />
     );
 }
 

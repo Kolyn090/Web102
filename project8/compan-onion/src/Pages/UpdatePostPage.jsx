@@ -67,20 +67,15 @@ function UpdatePostPage()
 function UpdateButton(props)
 {
     return (
-        <button style={{
-            ...props.style,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '6px',
-            backgroundColor: '#fff',
-            cursor: 'pointer',
-            height: 35,
-        }}>
-            <img src="./img/onion/onion (5).png" style={{height: 35}}/>
-            <span style={{ fontSize: '16px', color: '#333' }}>Update</span>
-        </button>
+        <OnionButton 
+            style={props.style}
+            borderColor={'#ccc'}
+            backgroundColor={'#fff'}
+            height={35}
+            onionId={2}
+            textColor={'#333'}
+            text={'Update'}
+        />
     );
 }
 

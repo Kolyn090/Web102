@@ -1,5 +1,6 @@
 import React from "react";
 import '../Styles/HideIfNarrow.css'
+import OnionButton from "./OnionButton";
 
 function HeaderBar(props)
 {
@@ -55,33 +56,23 @@ function HeaderOptionsPanel()
             justifyContent: 'flex-end',
             gap:5
         }}>
-            <button style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                border: '1px solid #ccc',
-                borderRadius: '6px',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-                height: 35
-            }}>
-                <img src="./img/onion/onion.png" style={{height: 35}}/>
-                <span className="hide_if_narrow" style={{ fontSize: '16px', color: '#333' }}>Home</span>
-            </button>
+            <OnionButton 
+                borderColor={'#ccc'}
+                backgroundColor={'#fff'}
+                height={35}
+                onionId={0}
+                textColor={'#333'}
+                text={'Home'}
+            />
 
-            <button style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                border: '1px solid #ccc',
-                borderRadius: '6px',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-                height: 35
-            }}>
-                <img src="./img/onion/onion (1).png" style={{height: 35}}/>
-                <span className="hide_if_narrow" style={{ fontSize: '16px', color: '#333' }}>Create Post</span>
-            </button>
+            <OnionButton 
+                borderColor={'#ccc'}
+                backgroundColor={'#fff'}
+                height={35}
+                onionId={1}
+                textColor={'#333'}
+                text={'Create Post'}
+            />
         </div>
     );
 }

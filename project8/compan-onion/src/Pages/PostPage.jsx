@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/Font.css'
+import OnionButton from '../Components/OnionButton';
 
 function PostPage() {
     const [comments, setComments] = useState([
@@ -126,28 +127,24 @@ function PostOptionsPanel(props)
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <button style={{
-                        padding: '6px 12px',
-                        fontSize: '0.9rem',
-                        border: '1px solid #ccc',
-                        borderRadius: '6px',
-                        backgroundColor: '#f2f2f2',
-                        cursor: 'pointer'
-                    }}>
-                        Edit
-                    </button>
-                    <button style={{
-                        padding: '6px 12px',
-                        fontSize: '0.9rem',
-                        border: '1px solid #e74c3c',
-                        borderRadius: '6px',
-                        backgroundColor: '#fff0f0',
-                        color: '#e74c3c',
-                        cursor: 'pointer'
-                    }}>
-                        Delete
-                    </button>
+                <div style={{ display: 'flex', gap: '5px' }}>
+                    <OnionButton
+                        borderColor={'#ccc'}
+                        backgroundColor={'#f2f2f2'}
+                        height={35}
+                        onionId={5}
+                        textColor={'#333'}
+                        text={'Edit'}
+                    />
+
+                    <OnionButton 
+                        borderColor={'#e74c3c'}
+                        backgroundColor={'#fff0f0'}
+                        height={35}
+                        onionId={4}
+                        textColor={'#e74c3c'}
+                        text={'Delete'}
+                    />
                 </div>
             </div>
         </div>
@@ -195,20 +192,15 @@ function CommentsPanel(props)
                         borderRadius: '6px'
                     }}
                 />
-                <button
-                    onClick={props.handleAddComment}
-                    style={{
-                        padding: '8px 12px',
-                        fontSize: '1rem',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer'
-                    }}
-                >
-                    Post
-                </button>
+
+                <OnionButton 
+                    borderColor={'#007bff'}
+                    backgroundColor={'#fff'}
+                    height={35}
+                    onionId={2}
+                    textColor={'#007bff'}
+                    text={'Post'}
+                />
             </div>
         </div>
     );
