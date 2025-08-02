@@ -6,6 +6,7 @@ import HeaderBar from './Components/HeaderBar';
 import PostsPage from './Pages/PostsPage';
 import CreatePostPage from './Pages/CreatePostPage';
 import PostPage from './Pages/PostPage';
+import UpdatePostPage from './Pages/UpdatePostPage';
 
 function App() {
     return (
@@ -43,6 +44,7 @@ function App() {
                             <Route path="/" element={<PostsPage/>} />
                             <Route path="/create" element={<CreatePostPage/>} />
                             <Route path="/post" element={<PostPage />} />
+                            <Route path="/update" element={<UpdatePostPage />} />
                         </Routes>
                     </div>
                 </main>
