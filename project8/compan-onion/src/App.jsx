@@ -9,39 +9,35 @@ function App() {
     return (
         <Router>
             <div style={{ display: 'flex' }}>
-                <AnimateBG style={{
-                    width: '5%', 
-                    height: '100vh',
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0
-                }}/>
-
-                <HeaderBar style={{
-                    width: '90%',
-                    height: 50,
-                    position: 'absolute',
+                <AnimateBG style={{position: 'fixed',
                     top: 0,
-                    left: '5%',
-                    borderBottom: '2px solid gray',
-                    boxShadow: '0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-                }}/>
-                
-                <AnimateBG style={{
-                    width: '5%', 
-                    height: '100vh',
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0
+                    left: 0,
+                    width: '100%',
+                    height: '100%'
                 }}/>
 
-                <PostsPage style={{
-                    width: '90%', 
-                    height: '95%',
-                    position: 'absolute',
-                    top: '5%',
-                    left: '5%'
-                }}/>
+                <div className='center-container'>
+                    <HeaderBar style={{
+                        width: '90%',
+                        height: 50,
+                        position: 'absolute',
+                        top: 0,
+                        left: '5%',
+                        borderBottom: '2px solid gray',
+                        boxShadow: '0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+                        zIndex: 99,
+                        backgroundColor: 'white'
+                    }}/>
+
+                    <PostsPage style={{
+                        width: '90%', 
+                        height: '95%',
+                        position: 'absolute',
+                        top: '5%',
+                        left: '5%',
+                        backgroundColor: 'white'
+                    }}/>
+                </div>
             </div>
         </Router>
     )

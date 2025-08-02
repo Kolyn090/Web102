@@ -24,6 +24,12 @@ function PostsPage(props)
                             marginTop: '-5%'
                     }}
                 />
+                <div style={{
+                    background: 'red',
+                    position: 'absolute',
+                    height: 800,
+                    width: '100%'
+                }}></div>
             </div>
         </div>
     )

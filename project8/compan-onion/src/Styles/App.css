@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.center-container {
+    width: 60%;
+    min-width: 400px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0px;
+    background-color: #ffffff;
+    z-index: 2;
+    border-top: 1px solid #cccccc;
+}
