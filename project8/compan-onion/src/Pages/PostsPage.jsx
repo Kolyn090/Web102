@@ -1,20 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SubOnionProfile from "../Components/SubOnionProfile";
 import PostPreview from "../Components/PostPreview";
 import OnionButton from "../Components/OnionButton";
+import { supabase } from "../database/client.js";
 
 function PostsPage(props)
 {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetchPosts(setPosts);
+    }, []);
+
     return (
         <div style={{...props.style}}>
             <div>
                 <ThumbnailPanel />
-                <SortByPanel />
-                <PreviewPostsPanel />
+                <SortByPanel posts={posts} setPosts={setPosts}/>
+                <PreviewPostsPanel posts={posts}/>
             </div>
         </div>
     )
 }
+
+const fetchPosts = async (setPosts) => {
+    const { data, error } = await supabase
+        .from("Posts")
+        .select();
+        
+        if (error) {
+            console.error('Error fetching posts:', error);
+            return;
+        }
+
+    setPosts(data);
+};
+
+const sortPostByNewest = (posts, setPosts) => {
+    const sorted = [...posts].sort((a, b) => 
+        new Date(b.created_at) - new Date(a.created_at)
+    );
+    setPosts(sorted);
+};
+
+const sortPostByPopularity = (posts, setPosts) => {
+    const sorted = [...posts].sort((a, b) => b.upvotes - a.upvotes);
+    setPosts(sorted);
+};
 
 function ThumbnailPanel()
 {
@@ -42,7 +74,7 @@ function ThumbnailPanel()
     );
 }
 
-function SortByPanel()
+function SortByPanel(props)
 {
     return (
         <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -60,6 +92,7 @@ function SortByPanel()
                     onionId={4}
                     textColor={'#FEA405'}
                     text={'Newest'}
+                    onClick={() => sortPostByNewest(props.posts, props.setPosts)}
                 />
 
                 <OnionButton 
@@ -69,13 +102,14 @@ function SortByPanel()
                     onionId={5}
                     textColor={'#F97A00'}
                     text={'Popularity'}
+                    onClick={() => sortPostByPopularity(props.posts, props.setPosts)}
                 />
             </div>
         </div>
     );
 }
 
-function PreviewPostsPanel()
+function PreviewPostsPanel(props)
 {
     return (
         <div style={{ 
@@ -88,14 +122,16 @@ function PreviewPostsPanel()
             justifyContent: 'center',
             backgroundColor: 'white'
         }}>
-            <PostPreview />
-            <PostPreview />
-            <PostPreview />
-            <PostPreview />
-            <PostPreview />
-            <PostPreview />
-            <PostPreview />
-            <PostPreview />
+            {
+                props.posts.map(post => (
+                    <PostPreview 
+                        key={post.id}
+                        title={post.title}
+                        created_at={post.created_at}
+                        upvotes={post.upvotes}
+                    />
+                ))
+            }
         </div>
     );
 }

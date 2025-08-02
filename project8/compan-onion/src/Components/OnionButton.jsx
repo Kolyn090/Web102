@@ -32,7 +32,9 @@ function OnionButton(props)
             backgroundColor: props.backgroundColor,
             cursor: 'pointer',
             height: props.height
-        }}>
+            }}
+            onClick={props.onClick}
+        >
             <img src={onionId2Image(props.onionId)} style={{height: props.height}}/>
             <span className="hide_if_narrow" style={{ fontSize: '16px', color: props.textColor }}>
                 {props.text}

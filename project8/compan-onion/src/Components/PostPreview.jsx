@@ -3,8 +3,9 @@ import '../Styles/Font.css'
 import '../Styles/HideIfNarrow.css'
 import { Link } from 'react-router-dom';
 import OnionButton from "./OnionButton";
+import cleanCreationDate from "../data/creationDateCleaner.js";
 
-function PostPreview()
+function PostPreview(props)
 {
     return (
         <div style={{
@@ -24,8 +25,8 @@ function PostPreview()
                 width: '70%',
                 left: 0
             }}>
-                <TitleLabel />
-                <CreationDateLabel />
+                <TitleLabel title={props.title}/>
+                <CreationDateLabel created_at={props.created_at}/>
             </Link>
 
             <div style={{
@@ -35,13 +36,13 @@ function PostPreview()
                 position: 'relative',
                 justifyContent: 'center'
             }}>
-                <UpvoteButton />
+                <UpvoteButton upvotes={props.upvotes}/>
             </div>
         </div>
     );
 }
 
-function TitleLabel()
+function TitleLabel(props)
 {
     return (
         <div style={{
@@ -54,12 +55,12 @@ function TitleLabel()
             textAlign: 'left',
             color: 'black'
         }}>
-            This is a very long title that should be truncated with ellipsis if it exceeds the container
+            {props.title}
         </div>
     );
 }
 
-function CreationDateLabel()
+function CreationDateLabel(props)
 {
     return (
         <div style={{
@@ -69,12 +70,12 @@ function CreationDateLabel()
             fontSize: '0.8rem',
             color: 'gray'
         }}>
-            Created: Aug 2, 2025
+            Created: {cleanCreationDate(props.created_at)}
         </div>
     );
 }
 
-function UpvoteButton()
+function UpvoteButton(props)
 {
     return (
         <OnionButton 
@@ -84,7 +85,7 @@ function UpvoteButton()
             height={35}
             onionId={3}
             textColor={'#333'}
-            text={'11 Upvotes'}
+            text={`${props.upvotes} Upvotes`}
         />
     );
 }
