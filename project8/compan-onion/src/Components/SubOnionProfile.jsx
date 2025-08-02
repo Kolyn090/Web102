@@ -1,7 +1,7 @@
 import React from "react";
 import '../Styles/Font.css'
 
-function SubRedditProfile(props)
+function SubOnionProfile(props)
 {
     return (
         <div style={{...props.style}}>
@@ -34,4 +34,4 @@ function SubRedditProfile(props)
     );
 }
 
-export default SubRedditProfile;
+export default SubOnionProfile;

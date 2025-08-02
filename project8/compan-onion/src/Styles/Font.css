@@ -11,3 +11,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('./font/Inter_24pt-Bold.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
