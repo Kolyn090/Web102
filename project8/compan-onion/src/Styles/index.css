@@ -1,3 +1,5 @@
+@import './Font.css';
+
 :root {
   font-family: 'Inter';
   line-height: 1.5;
@@ -67,11 +69,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./font/Inter_24pt-Regular.ttf');
-  font-weight: normal;
-  font-style: normal;
 }

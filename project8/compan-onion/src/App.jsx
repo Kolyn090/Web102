@@ -19,7 +19,7 @@ function App() {
 
                 <HeaderBar style={{
                     width: '90%',
-                    height: '5%',
+                    height: 50,
                     position: 'absolute',
                     top: 0,
                     left: '5%',
