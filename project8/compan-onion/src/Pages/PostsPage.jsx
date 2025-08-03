@@ -10,6 +10,14 @@ function PostsPage(props)
     const [renderPosts, setRenderPosts] = useState([]);
     const [searchText, setSearchText] = useState("");
 
+    const handleUpvote = async (post, setPost) => {
+        const newCount = post.upvotes + 1;
+        const result = await updateUpvotes(post.id, newCount);
+        if (!result.error) {
+            setPost(result.data[0]); // or re-fetch post if needed
+        }
+    };
+
     useEffect(() => {
         fetchPosts(setPosts, setRenderPosts);
     }, []);
@@ -25,7 +33,7 @@ function PostsPage(props)
                                     setRenderPosts(searchPosts(posts, v));
                                     setSearchText(v);
                                 }}/>
-                <PreviewPostsPanel posts={renderPosts}/>
+                <PreviewPostsPanel posts={renderPosts} handleUpvote={handleUpvote}/>
             </div>
         </div>
     )
@@ -65,6 +73,21 @@ const sortPostByPopularity = (posts, setPosts) => {
     const sorted = [...posts].sort((a, b) => b.upvotes - a.upvotes);
     setPosts(sorted);
 };
+
+const updateUpvotes = async (postId, newUpvoteCount) => {
+    const { data, error } = await supabase
+        .from('Posts')
+        .update({ upvotes: newUpvoteCount })
+        .eq('id', postId)
+        .select();
+
+    if (error) {
+        console.error('Failed to update upvotes:', error.message);
+        return { error };
+    }
+
+    return { data };
+}
 
 function SearchField(props)
 {
@@ -167,9 +190,11 @@ function PreviewPostsPanel(props)
                     <PostPreview 
                         key={post.id}
                         id={post.id}
+                        post={post}
                         title={post.title}
                         created_at={post.created_at}
                         upvotes={post.upvotes}
+                        handleUpvote={props.handleUpvote}
                     />
                 ))
             }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import '../Styles/Font.css'
 import '../Styles/HideIfNarrow.css'
 import { Link } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { cleanCreationDate } from "../data/creationDateCleaner.js";
 
 function PostPreview(props)
 {
+    const [post, setPost] = useState(props.post);
+
     return (
         <div style={{
             borderRadius: 20,
@@ -20,13 +22,14 @@ function PostPreview(props)
             alignItems: 'flex-start',
             gap: 25
         }}>
-            <Link to={`post/${props.id}`}
+            <Link to={`post/${post.id}`}
                 style={{
                 width: '70%',
                 left: 0
             }}>
-                <TitleLabel title={props.title}/>
-                <CreationDateLabel created_at={props.created_at}/>
+                <TitleLabel title={post.title}/>
+                <CreationDateLabel 
+                    created_at={post.created_at} />
             </Link>
 
             <div style={{
@@ -34,9 +37,9 @@ function PostPreview(props)
                 width: '30%',
                 right: 0,
                 position: 'relative',
-                justifyContent: 'center'
+                justifyContent: 'end'
             }}>
-                <UpvoteButton upvotes={props.upvotes}/>
+                <UpvoteButton upvotes={post.upvotes} onClick={() => props.handleUpvote(post, setPost)}/>
             </div>
         </div>
     );
@@ -86,6 +89,7 @@ function UpvoteButton(props)
             onionId={3}
             textColor={'#333'}
             text={`${props.upvotes} Upvotes`}
+            onClick={props.onClick}
         />
     );
 }

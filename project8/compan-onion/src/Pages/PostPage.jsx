@@ -25,6 +25,14 @@ function PostPage(props) {
         window.location = "/"
     };
 
+    const handleUpvote = async () => {
+        const newCount = post.upvotes + 1;
+        const result = await updateUpvotes(post.id, newCount);
+        if (!result.error) {
+            setPost(result.data[0]); // or re-fetch post if needed
+        }
+    };
+
     useEffect(() => {
         fetchPostById(id, setPost);
     }, []);
@@ -65,7 +73,7 @@ function PostPage(props) {
                 <TitleLabel post={post} />
                 <DescriptionLabel post={post} />
                 <PostImage post={post} imageFailed={imageFailed} />
-                <PostOptionsPanel post={post} id={id} onClick={removePost}/>
+                <PostOptionsPanel post={post} id={id} onUpvoteClick={handleUpvote} onDeleteClick={removePost}/>
                 <CommentsPanel newComment={newComment} 
                                 comments={comments} 
                                 handleAddComment={handleAddComment}
@@ -116,6 +124,21 @@ const addComment = async (postId, text) => {
 
     if (error) {
         console.error('Error adding comment:', error.message);
+        return { error };
+    }
+
+    return { data };
+}
+
+const updateUpvotes = async (postId, newUpvoteCount) => {
+    const { data, error } = await supabase
+        .from('Posts')
+        .update({ upvotes: newUpvoteCount })
+        .eq('id', postId)
+        .select();
+
+    if (error) {
+        console.error('Failed to update upvotes:', error.message);
         return { error };
     }
 
@@ -191,6 +214,7 @@ function PostOptionsPanel(props)
                 onionId={3}
                 textColor={'#333'}
                 text={props.post.upvotes}
+                onClick={props.onUpvoteClick}
             />
             <div style={{
                 display: 'flex',
@@ -216,7 +240,7 @@ function PostOptionsPanel(props)
                         onionId={4}
                         textColor={'#e74c3c'}
                         text={'Delete'}
-                        onClick={props.onClick}
+                        onClick={props.onDeleteClick}
                     />
                 </div>
             </div>
