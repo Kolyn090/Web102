@@ -126,6 +126,7 @@ function PreviewPostsPanel(props)
                 props.posts.map(post => (
                     <PostPreview 
                         key={post.id}
+                        id={post.id}
                         title={post.title}
                         created_at={post.created_at}
                         upvotes={post.upvotes}

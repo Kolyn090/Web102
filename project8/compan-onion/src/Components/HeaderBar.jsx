@@ -24,7 +24,7 @@ function SiteLogo()
                 height: 50
                 // background: 'red'
             }}>
-            <img src="./img/Componion.png" 
+            <img src="/img/Componion.png" 
             style={{height: '100%',
                     objectFit: 'contain',
                     display: 'block',
@@ -32,7 +32,7 @@ function SiteLogo()
                     left: 20
             }}
         />
-        <img src="./img/logo-text.png" 
+        <img src="/img/logo-text.png" 
             style={{left: 80,
                     width: 200,
                     objectFit: 'contain',

@@ -5,17 +5,17 @@ const onionId2Image = (id) => {
     switch (id)
     {
         case 0:
-            return "./img/onion/onion.png";
+            return "/img/onion/onion.png";
         case 1:
-            return "./img/onion/onion (1).png";
+            return "/img/onion/onion (1).png";
         case 2:
-            return "./img/onion/onion (2).png";
+            return "/img/onion/onion (2).png";
         case 3:
-            return "./img/onion/onion (3).png";
+            return "/img/onion/onion (3).png";
         case 4:
-            return "./img/onion/onion (4).png";
+            return "/img/onion/onion (4).png";
         case 5:
-            return "./img/onion/onion (5).png";
+            return "/img/onion/onion (5).png";
     }
 };
 

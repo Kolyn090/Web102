@@ -3,8 +3,8 @@
     margin: 0;
     padding: 0;
     background-image: 
-        url('./img/creeper.png'),
-        url('./img/creeper.png');
+        url('/img/creeper.png'),
+        url('/img/creeper.png');
     background-color: #28ac44;
     background-size: 100px 100px, 100px 100px;
     background-repeat: repeat, repeat;

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/Font.css'
 import OnionButton from '../Components/OnionButton';
+import { supabase } from "../database/client.js";
+import { useParams, useLocation } from 'react-router-dom';
+import { cleanCreationTime } from "../data/creationDateCleaner.js";
 
-function PostPage() {
+function PostPage(props) {
+    const { id } = useParams();
     const [comments, setComments] = useState([
         "Looks great!",
         "Very helpful post.",
@@ -13,14 +17,7 @@ function PostPage() {
     const [post, setPost] = useState(null);
 
     useEffect(() => {
-        setPost(
-            {
-                title: 'Example Post Title',
-                description: 'Some description here.',
-                imageUrl: 'https://wallpapers.com/images/hd/best-minecraft-sunset-at-sea-xcmy8jpadxyrgys8.jpg',
-                createdAt: 'August 2, 2025',
-                upvotes: 42
-            });
+        fetchPostById(id, setPost);
     }, []);
 
     if (!post) return <div>Loading...</div>;
@@ -56,11 +53,26 @@ function PostPage() {
     );
 }
 
+const fetchPostById = async (id, setPost) => {
+    const { data, error } = await supabase
+        .from("Posts")
+        .select()
+        .eq('id', id)
+        .single();
+        
+        if (error) {
+            console.error('Error fetching post:', error);
+            return;
+        }
+
+    setPost(data);
+};
+
 function CreationDateLabel(props)
 {
     return (
         <div style={{ fontSize: '0.8rem', color: 'gray', textAlign: 'start' }}>
-            Created: {props.post.createdAt}
+            Created: {cleanCreationTime(props.post.created_at)}
         </div>
     );
 }
@@ -119,9 +131,14 @@ function PostOptionsPanel(props)
             justifyContent: 'space-between',
             alignItems: 'center'
         }}>
-            <div style={{ fontSize: '1rem', color: '#333' }}>
-                ↑ {props.post.upvotes} upvotes
-            </div>
+            <OnionButton
+                borderColor={'#ccc'}
+                backgroundColor={'#f2f2f2'}
+                height={35}
+                onionId={3}
+                textColor={'#333'}
+                text={props.post.upvotes}
+            />
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',

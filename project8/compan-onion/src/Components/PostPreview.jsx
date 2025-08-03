@@ -3,7 +3,7 @@ import '../Styles/Font.css'
 import '../Styles/HideIfNarrow.css'
 import { Link } from 'react-router-dom';
 import OnionButton from "./OnionButton";
-import cleanCreationDate from "../data/creationDateCleaner.js";
+import { cleanCreationDate } from "../data/creationDateCleaner.js";
 
 function PostPreview(props)
 {
@@ -20,7 +20,7 @@ function PostPreview(props)
             alignItems: 'flex-start',
             gap: 25
         }}>
-            <Link to="post"
+            <Link to={`post/${props.id}`}
                 style={{
                 width: '70%',
                 left: 0
