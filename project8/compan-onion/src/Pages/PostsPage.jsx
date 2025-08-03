@@ -7,23 +7,40 @@ import { supabase } from "../database/client.js";
 function PostsPage(props)
 {
     const [posts, setPosts] = useState([]);
+    const [renderPosts, setRenderPosts] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
-        fetchPosts(setPosts);
+        fetchPosts(setPosts, setRenderPosts);
     }, []);
 
     return (
         <div style={{...props.style}}>
             <div>
                 <ThumbnailPanel />
-                <SortByPanel posts={posts} setPosts={setPosts}/>
-                <PreviewPostsPanel posts={posts}/>
+                <SortByPanel posts={posts} setPosts={setRenderPosts}/>
+                <SearchField value={searchText} 
+                                placeholder={"Search"} 
+                                onChange={(v) => {
+                                    setRenderPosts(searchPosts(posts, v));
+                                    setSearchText(v);
+                                }}/>
+                <PreviewPostsPanel posts={renderPosts}/>
             </div>
         </div>
     )
 }
 
-const fetchPosts = async (setPosts) => {
+function searchPosts(posts, query) {
+    const lowerQuery = query.toLowerCase();
+
+    return posts.filter(post =>
+        post.title.toLowerCase().includes(lowerQuery) ||
+        post.description.toLowerCase().includes(lowerQuery)
+    );
+}
+
+const fetchPosts = async (setPosts, setRenderPosts) => {
     const { data, error } = await supabase
         .from("Posts")
         .select();
@@ -34,6 +51,7 @@ const fetchPosts = async (setPosts) => {
         }
 
     setPosts(data);
+    setRenderPosts(data);
 };
 
 const sortPostByNewest = (posts, setPosts) => {
@@ -47,6 +65,28 @@ const sortPostByPopularity = (posts, setPosts) => {
     const sorted = [...posts].sort((a, b) => b.upvotes - a.upvotes);
     setPosts(sorted);
 };
+
+function SearchField(props)
+{
+    return (
+        <input
+            type="text"
+            value={props.value}
+            onChange={e => props.onChange(e.target.value)}
+            placeholder={props.placeholder}
+            style={{
+                padding: '8px',
+                fontSize: '16px',
+                borderRadius: '6px',
+                border: '1px solid #ccc',
+                width: '100%',
+                maxWidth: '300px',
+                marginBottom: '16px',
+                margin: '8px'
+            }}
+        />
+    );
+}
 
 function ThumbnailPanel()
 {

@@ -17,6 +17,17 @@ function PostPage(props) {
     const [imageFailed, setImageFailed] = useState(false);
     const [post, setPost] = useState(null);
 
+    const removePost = async (event) => {
+        event.preventDefault();
+
+        await supabase
+            .from('Posts')
+            .delete()
+            .eq('id', id); 
+
+        window.location = "/"
+    };
+
     useEffect(() => {
         fetchPostById(id, setPost);
     }, []);
@@ -44,7 +55,7 @@ function PostPage(props) {
                 <TitleLabel post={post} />
                 <DescriptionLabel post={post} />
                 <PostImage post={post} imageFailed={imageFailed} />
-                <PostOptionsPanel post={post} id={id} />
+                <PostOptionsPanel post={post} id={id} onClick={removePost}/>
                 <CommentsPanel newComment={newComment} 
                                 comments={comments} 
                                 handleAddComment={handleAddComment}
@@ -163,6 +174,7 @@ function PostOptionsPanel(props)
                         onionId={4}
                         textColor={'#e74c3c'}
                         text={'Delete'}
+                        onClick={props.onClick}
                     />
                 </div>
             </div>
