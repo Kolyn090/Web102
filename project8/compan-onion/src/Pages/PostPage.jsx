@@ -3,6 +3,7 @@ import '../Styles/Font.css'
 import OnionButton from '../Components/OnionButton';
 import { supabase } from "../database/client.js";
 import { useParams, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { cleanCreationTime } from "../data/creationDateCleaner.js";
 
 function PostPage(props) {
@@ -43,7 +44,7 @@ function PostPage(props) {
                 <TitleLabel post={post} />
                 <DescriptionLabel post={post} />
                 <PostImage post={post} imageFailed={imageFailed} />
-                <PostOptionsPanel post={post} />
+                <PostOptionsPanel post={post} id={id} />
                 <CommentsPanel newComment={newComment} 
                                 comments={comments} 
                                 handleAddComment={handleAddComment}
@@ -102,13 +103,12 @@ function PostImage(props)
             display: 'flex',
             justifyContent: 'flex-start'
         }}>
-            {/* Image (conditionally rendered if URL seems valid) */}
-            {props.post.imageUrl && !props.imageFailed ? (
+            {props.post.image_url && !props.imageFailed ? (
                 <img
-                    src={props.post.imageUrl}
+                    src={props.post.image_url}
                     alt="Post"
                     style={{
-                        height: '200px',
+                        height: '100%',
                         objectFit: 'cover',
                         borderRadius: '8px'
                     }}
@@ -145,14 +145,16 @@ function PostOptionsPanel(props)
                 alignItems: 'center'
             }}>
                 <div style={{ display: 'flex', gap: '5px' }}>
-                    <OnionButton
-                        borderColor={'#ccc'}
-                        backgroundColor={'#f2f2f2'}
-                        height={35}
-                        onionId={5}
-                        textColor={'#333'}
-                        text={'Edit'}
-                    />
+                    <Link to={`/update/${props.id}`}>
+                        <OnionButton
+                            borderColor={'#ccc'}
+                            backgroundColor={'#f2f2f2'}
+                            height={35}
+                            onionId={5}
+                            textColor={'#333'}
+                            text={'Edit'}
+                        />
+                    </Link>
 
                     <OnionButton 
                         borderColor={'#e74c3c'}

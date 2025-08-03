@@ -1,11 +1,47 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "../database/client.js";
+import { useParams, useLocation } from 'react-router-dom';
+import OnionButton from "../Components/OnionButton.jsx";
 
 function UpdatePostPage()
 {
+    const { id } = useParams();
+    const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const [post, setPost] = useState(null);
+
+    const updatePost = async (event) => {
+        event.preventDefault();
+
+        await supabase
+        .from ('Posts')
+        .update({
+            title: title,
+            description: description,
+            image_url: imageUrl
+        })
+        .eq('id', id);
+        window.location = `/post/${id}`
+    };
+
+    useEffect(() => {
+        if (id) {
+            fetchPost(setLoading, id, setPost);
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (post) {
+            setTitle(post.title);
+            setDescription(post.description);
+            setImageUrl(post.image_url);
+        }
+    }, [post]);
+    
+    if (loading) return <p>Loading...</p>;
 
     return (
         <div style={{
@@ -49,7 +85,7 @@ function UpdatePostPage()
             <input
                 type="text"
                 placeholder="Image URL (Optional)"
-                value={imageUrl}
+                value={imageUrl ? imageUrl : ""}
                 onChange={(e) => setImageUrl(e.target.value)}
                 style={{
                     padding: '10px',
@@ -59,10 +95,24 @@ function UpdatePostPage()
                 }}
             />
 
-            <UpdateButton style={{ width: 140 }}/>
+            <UpdateButton style={{ width: 140 }} onClick={updatePost}/>
         </div>
     );
 }
+
+const fetchPost = async (setLoading, id, setPost) => {
+    setLoading(true);
+    const { data, error } = await supabase
+        .from('Posts') 
+        .select('*')
+        .eq('id', id) 
+        .single();
+    
+    if (error) setError(error);
+        else setPost(data);
+
+    setLoading(false);
+};
 
 function UpdateButton(props)
 {
@@ -75,6 +125,7 @@ function UpdateButton(props)
             onionId={2}
             textColor={'#333'}
             text={'Update'}
+            onClick={props.onClick}
         />
     );
 }

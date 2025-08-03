@@ -1,23 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import OnionButton from "../Components/OnionButton";
+import { supabase } from "../database/client.js";
 
 function CreatePostPage()
 {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-
-    const handleCreate = () => {
-        const postData = {
-            title,
-            description,
-            imageUrl,
-            createdAt: new Date().toISOString()
-        };
-        console.log('Creating post:', postData);
-        // You can replace this with an API call or handler
-    };
 
     return (
         <div style={{
@@ -71,13 +61,31 @@ function CreatePostPage()
                 }}
             />
 
-            <CreateButton style={{ width: 140 }}/>
+            <CreateButton 
+                style={{ width: 140 }}
+                title={title}
+                description={description}
+                image_url={imageUrl}
+            />
         </div>
     );
 }
 
 function CreateButton(props)
 {
+    const createPost = async (event) => {
+        event.preventDefault();
+        await supabase
+            .from('Posts')
+            .insert({
+                title: props.title,
+                description: props.description,
+                image_url: props.image_url
+            })
+            .select();
+        window.location = "/"
+    };
+
     return (
         <OnionButton 
             style={props.style}
@@ -87,6 +95,7 @@ function CreateButton(props)
             onionId={2}
             textColor={'#333'}
             text={'Create'}
+            onClick={createPost}
         />
     );
 }
