@@ -8,14 +8,11 @@ import { cleanCreationTime } from "../data/creationDateCleaner.js";
 
 function PostPage(props) {
     const { id } = useParams();
-    const [comments, setComments] = useState([
-        "Looks great!",
-        "Very helpful post.",
-        "Thanks for sharing."
-    ]);
+    const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [imageFailed, setImageFailed] = useState(false);
     const [post, setPost] = useState(null);
+    const [error, setError] = useState(null);
 
     const removePost = async (event) => {
         event.preventDefault();
@@ -32,11 +29,24 @@ function PostPage(props) {
         fetchPostById(id, setPost);
     }, []);
 
+    useEffect(() => {
+        fetchComments(id, setError, setComments)
+    }, []);
+
     if (!post) return <div>Loading...</div>;
 
-    const handleAddComment = () => {
+    if (!comments) return <div>Comments are not loaded.</div>;
+
+    const handleAddComment = async () => {
         if (newComment.trim()) {
-            setComments([...comments, newComment.trim()]);
+            const result = await addComment(id, newComment);
+            if (result.error) {
+                alert('Failed to add comment');
+                return;
+            }
+
+            // Optionally re-fetch all comments, or just append:
+            setComments((prev) => [...prev, result.data[0]]);
             setNewComment('');
         }
     };
@@ -80,6 +90,38 @@ const fetchPostById = async (id, setPost) => {
     setPost(data);
 };
 
+const fetchComments = async (postId, setError, setComments) => {
+    const { data, error } = await supabase
+        .from('Comments')
+        .select('*')
+        .eq('post_id', postId)
+        .order('created_at', { ascending: true });
+
+    if (error) setError(error);
+    else setComments(data);
+};
+
+const addComment = async (postId, text) => {
+    if (!text.trim()) return { error: 'Comment text is empty' };
+
+    const { data, error } = await supabase
+        .from('Comments')
+        .insert([
+        {
+            post_id: postId,
+            text: text
+        }
+        ])
+        .select();
+
+    if (error) {
+        console.error('Error adding comment:', error.message);
+        return { error };
+    }
+
+    return { data };
+}
+
 function CreationDateLabel(props)
 {
     return (
@@ -119,7 +161,7 @@ function PostImage(props)
                     src={props.post.image_url}
                     alt="Post"
                     style={{
-                        height: '100%',
+                        height: '200px',
                         objectFit: 'cover',
                         borderRadius: '8px'
                     }}
@@ -197,15 +239,19 @@ function CommentsPanel(props)
                 gap: '6px',
                 marginBottom: '12px'
             }}>
-                {props.comments.map((c, i) => (
-                    <div key={i} style={{
-                        backgroundColor: '#f4f4f4',
-                        padding: '8px 10px',
-                        borderRadius: '6px',
-                        textAlign: 'start'
-                    }}>
-                        {c}
+                {props.comments.map((c) => (
+                <div key={c.id} style={{
+                    backgroundColor: '#f4f4f4',
+                    padding: '8px 10px',
+                    borderRadius: '6px',
+                    textAlign: 'start',
+                    marginBottom: '8px'
+                }}>
+                    <div>{c.text}</div> {/* ✅ only render string or JSX */}
+                    <div style={{ fontSize: '0.8rem', color: '#888' }}>
+                    {new Date(c.created_at).toLocaleString()}
                     </div>
+                </div>
                 ))}
             </div>
 
@@ -231,6 +277,7 @@ function CommentsPanel(props)
                     onionId={2}
                     textColor={'#007bff'}
                     text={'Post'}
+                    onClick={props.handleAddComment}
                 />
             </div>
         </div>
